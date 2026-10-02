@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site-config";
 import { Container } from "./container";
 
@@ -42,8 +43,84 @@ function LinkedInIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
+function getSubpageTitle(path: string): string {
+  if (path.includes("/work/luxora")) return "Luxora Estates";
+  if (path.includes("/work/rex")) return "REX Real Estate Exchange";
+  if (path.includes("/work/sck")) return "Supply Chain Kernel";
+  if (path.includes("/research/agentic-ids")) return "Agentic AI IDS";
+  if (path.startsWith("/work")) return "Case Study";
+  if (path.startsWith("/research")) return "Research";
+  return "";
+}
+
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [homeActiveSection, setHomeActiveSection] = useState<string>("");
+  const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  const isHome = pathname === "/";
+  const subpageTitle = getSubpageTitle(pathname);
+
+  // Close menu on route change during render (official React pattern avoiding effect cascading)
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setMobileMenuOpen(false);
+  }
+
+  // Derive active section directly for subpages without needing setState
+  const activeSection = isHome
+    ? homeActiveSection
+    : pathname.startsWith("/work")
+    ? "work"
+    : pathname.startsWith("/research")
+    ? "research"
+    : "";
+
+  // Handle scroll to hash when navigating from a case study back to home
+  useEffect(() => {
+    if (isHome && typeof window !== "undefined" && window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      const element = document.getElementById(hash);
+      if (element) {
+        const timer = setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+          setHomeActiveSection(hash);
+        }, 120);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [isHome, pathname]);
+
+  // Scrollspy to detect active section on home page via IntersectionObserver
+  useEffect(() => {
+    if (!isHome) return;
+
+    const sections = ["work", "experience", "research", "about"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setHomeActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-20% 0px -55% 0px",
+        threshold: 0,
+      }
+    );
+
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isHome]);
 
   // Close menu on ESC key press
   useEffect(() => {
@@ -70,125 +147,231 @@ export function Navbar() {
     };
   }, [mobileMenuOpen]);
 
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    const hash = href.includes("#") ? href.split("#")[1] : "";
+    if (isHome && hash) {
+      e.preventDefault();
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", `#${hash}`);
+        setHomeActiveSection(hash);
+      }
+    }
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[#DADCD8] bg-[#F7F7F3]/90 backdrop-blur-md transition-colors">
-      <Container className="flex h-16 items-center justify-between">
-        {/* Logo / Name */}
-        <Link
-          href="/"
-          className="group inline-flex items-center gap-2 font-medium text-[#16181B] text-base tracking-tight hover:text-[#3157D5] transition-colors focus-visible:outline-2 focus-visible:outline-[#3157D5] py-2 rounded-sm"
-          aria-label="Bonam Gokul Venkat - Homepage"
-        >
-          <span className="font-semibold text-[#16181B] group-hover:text-[#3157D5] transition-colors">
-            {siteConfig.shortName}
-          </span>
-        </Link>
+    <>
+      <header className="sticky top-0 z-40 w-full border-b border-[#DADCD8] bg-[#F7F7F3]/90 backdrop-blur-md transition-colors">
+        <Container className="flex h-16 items-center justify-between gap-4">
+          {/* Logo / Name & Breadcrumbs */}
+          <div className="flex items-center gap-2.5 min-w-0">
+            <Link
+              href="/"
+              className="group inline-flex items-center gap-2 font-medium text-[#16181B] text-base tracking-tight hover:text-[#3157D5] transition-colors focus-visible:outline-2 focus-visible:outline-[#3157D5] py-2 rounded-sm shrink-0"
+              aria-label="Bonam Gokul Venkat - Homepage"
+            >
+              <span className="font-semibold text-[#16181B] group-hover:text-[#3157D5] transition-colors">
+                {siteConfig.shortName}
+              </span>
+            </Link>
 
-        {/* Desktop Navigation */}
-        <nav
-          className="hidden md:flex items-center gap-8"
-          aria-label="Main Navigation"
-        >
-          <div className="flex items-center gap-6 text-sm font-medium text-[#65686D]">
-            {siteConfig.navItems.map((item) => (
+            {/* Context breadcrumb when on a case study or research subpage */}
+            {!isHome && subpageTitle && (
+              <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-[#65686D] min-w-0">
+                <span className="text-[#DADCD8]">/</span>
+                <Link
+                  href={pathname.startsWith("/work") ? "/#work" : "/#research"}
+                  className="hover:text-[#3157D5] transition-colors shrink-0"
+                >
+                  {pathname.startsWith("/work") ? "Work" : "Research"}
+                </Link>
+                <span className="text-[#DADCD8]">/</span>
+                <span className="text-[#16181B] font-medium truncate max-w-[200px] lg:max-w-[320px]">
+                  {subpageTitle}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav
+            className="hidden md:flex items-center gap-7 shrink-0"
+            aria-label="Main Navigation"
+          >
+            <div className="flex items-center gap-6 text-sm font-medium">
+              {siteConfig.navItems.map((item) => {
+                const hash = item.href.includes("#") ? item.href.split("#")[1] : "";
+                const isActive =
+                  (isHome && hash && activeSection === hash) ||
+                  (!isHome && pathname.startsWith("/work") && item.label === "Work") ||
+                  (!isHome && pathname.startsWith("/research") && item.label === "Research");
+
+                if (item.isExternal) {
+                  return (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-1 text-[#65686D] transition-colors hover:text-[#16181B] focus-visible:outline-2 focus-visible:outline-[#3157D5] rounded-sm"
+                    >
+                      {item.label}
+                    </a>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className={`relative py-1 transition-colors hover:text-[#16181B] focus-visible:outline-2 focus-visible:outline-[#3157D5] rounded-sm ${
+                      isActive ? "text-[#16181B] font-semibold" : "text-[#65686D]"
+                    }`}
+                  >
+                    {item.label}
+                    {isActive && (
+                      <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#3157D5] rounded-full" />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div
+              className="h-4 w-px bg-[#DADCD8]"
+              role="separator"
+              aria-orientation="vertical"
+            />
+
+            {/* Social Icons */}
+            <div className="flex items-center gap-2.5">
               <a
-                key={item.label}
-                href={item.href}
-                target={item.isExternal ? "_blank" : undefined}
-                rel={item.isExternal ? "noopener noreferrer" : undefined}
-                className="py-1 transition-colors hover:text-[#16181B] focus-visible:outline-2 focus-visible:outline-[#3157D5] rounded-sm"
+                href={siteConfig.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profile"
+                className="flex h-9 w-9 items-center justify-center rounded-md text-[#65686D] hover:text-[#16181B] hover:bg-[#DADCD8]/30 transition-colors focus-visible:outline-2 focus-visible:outline-[#3157D5]"
               >
-                {item.label}
+                <GithubIcon className="w-[18px] h-[18px]" />
               </a>
-            ))}
+              <a
+                href={siteConfig.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
+                className="flex h-9 w-9 items-center justify-center rounded-md text-[#65686D] hover:text-[#16181B] hover:bg-[#DADCD8]/30 transition-colors focus-visible:outline-2 focus-visible:outline-[#3157D5]"
+              >
+                <LinkedInIcon className="w-[18px] h-[18px]" />
+              </a>
+            </div>
+          </nav>
+
+          {/* Mobile Right Controls */}
+          <div className="md:hidden flex items-center gap-2 shrink-0">
+            {!isHome && (
+              <Link
+                href={pathname.startsWith("/work") ? "/#work" : "/#research"}
+                className="inline-flex min-h-[34px] items-center gap-1 px-2.5 py-1 text-xs font-mono font-medium text-[#3157D5] bg-[#3157D5]/10 rounded border border-[#3157D5]/20 hover:bg-[#3157D5]/15 transition-colors"
+              >
+                <span>←</span>
+                <span>{pathname.startsWith("/work") ? "Work" : "Home"}</span>
+              </Link>
+            )}
+
+            {/* Mobile Menu Button */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="flex h-10 w-10 items-center justify-center rounded-md text-[#16181B] hover:bg-[#DADCD8]/40 focus-visible:outline-2 focus-visible:outline-[#3157D5] transition-colors"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {mobileMenuOpen ? (
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
           </div>
+        </Container>
+      </header>
 
-          <div
-            className="h-4 w-px bg-[#DADCD8]"
-            role="separator"
-            aria-orientation="vertical"
-          />
-
-          {/* Social Icons */}
-          <div className="flex items-center gap-3">
-            <a
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub profile"
-              className="flex h-9 w-9 items-center justify-center rounded-md text-[#65686D] hover:text-[#16181B] hover:bg-[#DADCD8]/30 transition-colors focus-visible:outline-2 focus-visible:outline-[#3157D5]"
-            >
-              <GithubIcon className="w-[18px] h-[18px]" />
-            </a>
-            <a
-              href={siteConfig.links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn profile"
-              className="flex h-9 w-9 items-center justify-center rounded-md text-[#65686D] hover:text-[#16181B] hover:bg-[#DADCD8]/30 transition-colors focus-visible:outline-2 focus-visible:outline-[#3157D5]"
-            >
-              <LinkedInIcon className="w-[18px] h-[18px]" />
-            </a>
-          </div>
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden flex h-11 w-11 items-center justify-center rounded-md text-[#16181B] hover:bg-[#DADCD8]/40 focus-visible:outline-2 focus-visible:outline-[#3157D5] transition-colors"
-          aria-expanded={mobileMenuOpen}
-          aria-controls="mobile-nav"
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {mobileMenuOpen ? (
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-              aria-hidden="true"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-              aria-hidden="true"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
-        </button>
-      </Container>
-
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer Menu (rendered outside header so position:fixed is relative to viewport) */}
       {mobileMenuOpen && (
         <div
           id="mobile-nav"
           className="md:hidden fixed inset-x-0 top-16 bottom-0 z-50 bg-[#F7F7F3] border-t border-[#DADCD8] px-6 py-8 flex flex-col justify-between overflow-y-auto"
         >
-          <nav className="flex flex-col space-y-5" aria-label="Mobile Navigation">
-            {siteConfig.navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                target={item.isExternal ? "_blank" : undefined}
-                rel={item.isExternal ? "noopener noreferrer" : undefined}
-                className="flex items-center justify-between text-lg font-medium text-[#16181B] py-2 border-b border-[#DADCD8]/60 hover:text-[#3157D5] transition-colors"
-              >
-                <span>{item.label}</span>
-                <span className="font-mono text-xs text-[#65686D]">
-                  {item.isExternal ? "EXT" : "SECTION"}
-                </span>
-              </a>
-            ))}
+          <nav className="flex flex-col space-y-4" aria-label="Mobile Navigation">
+            {siteConfig.navItems.map((item) => {
+              const hash = item.href.includes("#") ? item.href.split("#")[1] : "";
+              const isActive =
+                (isHome && hash && activeSection === hash) ||
+                (!isHome && pathname.startsWith("/work") && item.label === "Work") ||
+                (!isHome && pathname.startsWith("/research") && item.label === "Research");
+
+              if (item.isExternal) {
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between text-lg font-medium text-[#16181B] py-2 border-b border-[#DADCD8]/60 hover:text-[#3157D5] transition-colors"
+                  >
+                    <span>{item.label}</span>
+                    <span className="font-mono text-xs text-[#65686D]">EXT</span>
+                  </a>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className={`flex items-center justify-between text-lg py-2 border-b border-[#DADCD8]/60 transition-colors ${
+                    isActive
+                      ? "text-[#3157D5] font-semibold"
+                      : "text-[#16181B] font-medium hover:text-[#3157D5]"
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#3157D5]" />}
+                    <span>{item.label}</span>
+                  </span>
+                  <span className="font-mono text-xs text-[#65686D]">
+                    {isActive ? "ACTIVE" : "SECTION"}
+                  </span>
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="pt-8 border-t border-[#DADCD8]">
@@ -218,6 +401,6 @@ export function Navbar() {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

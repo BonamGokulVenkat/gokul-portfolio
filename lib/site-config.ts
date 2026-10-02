@@ -57,10 +57,10 @@ export const siteConfig: SiteConfig = {
     resume: "/resume.pdf",
   },
   navItems: [
-    { label: "Work", href: "#work" },
-    { label: "Experience", href: "#experience" },
-    { label: "Research", href: "#research" },
-    { label: "About", href: "#about" },
+    { label: "Work", href: "/#work" },
+    { label: "Experience", href: "/#experience" },
+    { label: "Research", href: "/#research" },
+    { label: "About", href: "/#about" },
     { label: "Resume ↗", href: "/resume.pdf", isExternal: true },
   ],
 };
