@@ -3,17 +3,16 @@ import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { CaseStudyHero } from "@/components/case-study/case-study-hero";
 import { SckArchitectureDiagram } from "@/components/case-study/sck-architecture-diagram";
-import { SckConcurrencyComparison } from "@/components/case-study/sck-concurrency-comparison";
 import { SckScreenshotGallery } from "@/components/case-study/sck-screenshot-gallery";
 
 export const metadata: Metadata = {
   title: "SCK Full-Stack Engineering Case Study | Gokul Venkat",
   description:
-    "A collaborative full-stack engineering case study covering SCK, including direct frontend contributions, booking workflow collaboration, PostgreSQL transactions, realtime updates, and concurrency lessons.",
+    "A collaborative full-stack engineering case study covering SCK, including direct frontend contributions, booking workflow collaboration, PostgreSQL transactions, realtime updates, and architecture insights.",
   openGraph: {
     title: "SCK Full-Stack Engineering Case Study | Gokul Venkat",
     description:
-      "A collaborative full-stack engineering case study covering SCK, including direct frontend contributions, booking workflow collaboration, PostgreSQL transactions, realtime updates, and concurrency lessons.",
+      "A collaborative full-stack engineering case study covering SCK, including direct frontend contributions, booking workflow collaboration, PostgreSQL transactions, realtime updates, and architecture insights.",
     type: "article",
     url: "https://gokulvenkat.dev/work/sck",
   },
@@ -21,7 +20,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "SCK Full-Stack Engineering Case Study | Gokul Venkat",
     description:
-      "Collaborative full-stack case study covering SCK: direct frontend work, booking workflow collaboration, PostgreSQL transactions, and concurrency lessons.",
+      "Collaborative full-stack case study covering SCK: direct frontend work, booking workflow collaboration, PostgreSQL transactions, and architecture insights.",
   },
 };
 
@@ -90,24 +89,28 @@ export default function SckCaseStudyPage() {
 
   const lessons = [
     {
-      title: "TRANSACTIONS ≠ CONCURRENCY SAFETY",
-      body: "Atomic multi-statement writes guarantee all-or-nothing execution, but they do not prevent race conditions if availability is checked before the transaction and the slot update lacks conditional guards or locking.",
+      title: "TEAM OWNERSHIP",
+      body: "Working in a small team required coordinating changes across frontend, APIs, data models, and integrations.",
     },
     {
-      title: "BACKEND VALIDATION MUST MATCH UI RULES",
-      body: "Client-side form requirements and step indicators are merely user experience conveniences. If the server API accepts weaker payloads, unauthorized or corrupted state will enter the database.",
+      title: "TRANSACTIONAL WORKFLOWS",
+      body: "Related database changes should be grouped around coherent business operations to maintain reliable record states.",
     },
     {
-      title: "REALTIME IS NOT CONSISTENCY",
-      body: "WebSocket pub/sub subscriptions improve interface freshness and perceived speed, but they provide zero transactional guarantees. Distributed data consistency belongs in the database, not in client event listeners.",
+      title: "FRONTEND AND BACKEND CONTRACTS",
+      body: "Booking flows depend on consistent payloads, validation, and state representation across both client and server boundaries.",
     },
     {
-      title: "AUTHORIZATION MUST EXIST AT THE API",
-      body: "Hiding admin buttons or redirecting unauthenticated users in the browser provides no security boundary. Every API route handler must strictly verify session JWTs and record ownership independently.",
+      title: "REALTIME UX",
+      body: "Database change subscriptions can keep administrative and user views fresh without requiring users to manually refresh the page.",
     },
     {
-      title: "EXTERNAL EFFECTS NEED FAILURE DESIGN",
-      body: "Third-party network calls (WhatsApp gateway, Nodemailer SMTP, Cloudinary uploads) cannot be rolled back by PostgreSQL transactions. Side effects require best-effort handling or durable outbox patterns.",
+      title: "EXTERNAL INTEGRATIONS",
+      body: "Media storage, messaging, email, and realtime services require clean boundaries and decoupling from core application logic.",
+    },
+    {
+      title: "RESPONSIVE PRODUCT DELIVERY",
+      body: "Public-facing content and booking journeys need to remain usable, legible, and visually balanced across different screen sizes and devices.",
     },
   ];
 
@@ -146,62 +149,9 @@ export default function SckCaseStudyPage() {
     },
   ];
 
-  const hardeningPriorities = [
-    {
-      num: "01",
-      title: "Make slot claim atomic",
-      desc: "Implement UPDATE offering_slots SET status = 'booked' WHERE id = ? AND status = 'available' RETURNING id, rolling back if 0 rows are returned.",
-    },
-    {
-      num: "02",
-      title: "Add database invariant preventing duplicate active bookings per slot",
-      desc: "Create a PostgreSQL partial unique index on bookings(slot_id) WHERE status IN ('pending', 'confirmed') as a hard database-level constraint.",
-    },
-    {
-      num: "03",
-      title: "Enforce valid booking state transitions centrally",
-      desc: "Replace ad-hoc status updates with a centralized state machine rejecting invalid jumps (e.g., cancelled → confirmed).",
-    },
-    {
-      num: "04",
-      title: "Move all required form/slot/location validation to the server",
-      desc: "Enforce Zod schema validation on route handlers so the API strictly rejects incomplete intakes regardless of client UI rules.",
-    },
-    {
-      num: "05",
-      title: "Add idempotency for booking submission",
-      desc: "Support client-generated idempotency keys to safely prevent accidental double-submits from rapid network retries.",
-    },
-    {
-      num: "06",
-      title: "Harden communication APIs and scheduled-job authorization",
-      desc: "Secure background trigger endpoints and webhook routes with timing-safe HMAC secret headers rather than simple bearer tokens.",
-    },
-    {
-      num: "07",
-      title: "Add durable notification delivery/outbox handling",
-      desc: "Persist outbound communication events to an outbox table in the same transaction as the booking, decoupling external HTTP calls from HTTP response time.",
-    },
-    {
-      num: "08",
-      title: "Improve realtime authorization and reconnect reconciliation",
-      desc: "Add row-level security tokens to Supabase channel subscriptions and reconcile stale client state via full timestamp refetch upon reconnect.",
-    },
-    {
-      num: "09",
-      title: "Add targeted integration/concurrency tests",
-      desc: "Build automated test suites with parallel worker threads attempting simultaneous bookings on identical slots to verify race prevention.",
-    },
-    {
-      num: "10",
-      title: "Add production observability before claiming scale/reliability",
-      desc: "Incorporate structured JSON logging, OpenTelemetry tracing, and database connection pool metrics prior to making high-availability claims.",
-    },
-  ];
-
   return (
     <article className="min-h-screen">
-      {/* 1. Case-study hero */}
+      {/* 1. Hero */}
       <CaseStudyHero
         label="CASE STUDY / 03"
         title="SCK Wellness Platform"
@@ -220,7 +170,7 @@ export default function SckCaseStudyPage() {
         backLabel="Back to selected work"
       />
 
-      {/* 2. Product context */}
+      {/* 2. Product Context */}
       <section
         aria-labelledby="product-context-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8] bg-[#F7F7F3]"
@@ -269,7 +219,7 @@ export default function SckCaseStudyPage() {
         </Container>
       </section>
 
-      {/* 3. Team & ownership */}
+      {/* 3. Team & Ownership */}
       <section
         aria-labelledby="team-ownership-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8]"
@@ -418,13 +368,13 @@ export default function SckCaseStudyPage() {
 
             <div className="p-4 rounded-lg bg-[#F7F7F3] border border-[#DADCD8] text-xs text-[#65686D]">
               <strong className="text-[#16181B]">Ownership Boundary: </strong>
-              I do not claim sole authorship of the booking backend, database schema, all booking APIs, concurrency control, or the platform as a whole. My role spanned dedicated frontend execution, UI subsystem design, and collaborative feature integration across booking and user touchpoints.
+              I do not claim sole authorship of the booking backend, database schema, all booking APIs, or the platform as a whole. My role spanned dedicated frontend execution, UI subsystem design, and collaborative feature integration across booking and user touchpoints.
             </div>
           </div>
         </Container>
       </section>
 
-      {/* 4. My direct contributions */}
+      {/* 4. Direct Contributions */}
       <section
         aria-labelledby="direct-contributions-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8] bg-[#F7F7F3]"
@@ -470,7 +420,7 @@ export default function SckCaseStudyPage() {
         </Container>
       </section>
 
-      {/* 5. Collaborative booking contribution */}
+      {/* 5. Collaborative Booking Contribution */}
       <section
         aria-labelledby="collaborative-booking-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8]"
@@ -505,7 +455,7 @@ export default function SckCaseStudyPage() {
         </Container>
       </section>
 
-      {/* 6. System architecture */}
+      {/* 6. System Architecture */}
       <section
         aria-labelledby="architecture-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8] bg-[#F7F7F3]"
@@ -543,7 +493,7 @@ export default function SckCaseStudyPage() {
                   Asynchronous Integrations
                 </span>
                 <p>
-                  Supabase Realtime provides pub/sub channels for UI cache invalidation, Cloudinary offloads image and receipt CDN hosting, and WhatsApp/Nodemailer handle best-effort communication triggers.
+                  Supabase Realtime provides pub/sub channels for UI cache invalidation, Cloudinary offloads image and receipt CDN hosting, and WhatsApp/Nodemailer handle communication workflows.
                 </p>
               </div>
             </div>
@@ -551,38 +501,43 @@ export default function SckCaseStudyPage() {
         </Container>
       </section>
 
-      {/* 7. Booking workflow */}
+      {/* 7. Booking Experience */}
       <section
-        aria-labelledby="booking-workflow-heading"
+        aria-labelledby="booking-experience-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8]"
       >
         <Container>
           <div className="max-w-4xl space-y-8">
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                06 / BOOKING WORKFLOW
+                06 / BOOKING EXPERIENCE
               </span>
               <h2
-                id="booking-workflow-heading"
+                id="booking-experience-heading"
                 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
               >
-                How the booking flow works
+                Helping deliver the booking experience
               </h2>
               <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                The booking journey takes users from initial program selection through dynamic intake questionnaires and slot reservation to post-submission status tracking.
+                The booking journey takes users from initial program selection through dynamic intake questionnaires and slot reservation to post-submission status tracking and admin schedule management.
               </p>
             </div>
 
             {/* End-to-End Pipeline Card */}
             <div className="p-6 rounded-xl border border-[#DADCD8] bg-[#F7F7F3] space-y-6">
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#3157D5] block">
-                END-TO-END BOOKING REQUEST LIFECYCLE
-              </span>
+              <div className="space-y-1">
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#3157D5] block">
+                  END-TO-END BOOKING REQUEST LIFECYCLE
+                </span>
+                <p className="text-xs text-[#65686D]">
+                  Booking creation groups related database writes within a PostgreSQL transaction, including booking persistence, slot-state updates, and draft cleanup.
+                </p>
+              </div>
 
               <div className="space-y-3 font-mono text-xs">
                 {/* Step 1 */}
                 <div className="p-3 rounded bg-white border border-[#DADCD8] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                  <span className="font-semibold text-[#16181B]">1. User Selects Offering</span>
+                  <span className="font-semibold text-[#16181B]">1. Select Offering</span>
                   <span className="text-[#65686D]">CST, Rakkenho, Music Therapy, or SKY</span>
                 </div>
                 <div className="text-center text-[#65686D] select-none text-xs">↓</div>
@@ -611,7 +566,7 @@ export default function SckCaseStudyPage() {
                 {/* Step 5 */}
                 <div className="p-3 rounded bg-white border border-[#DADCD8] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
                   <span className="font-semibold text-[#16181B]">5. Client Submits Request</span>
-                  <span className="text-[#65686D]">POST /api/bookings with auth session cookie</span>
+                  <span className="text-[#65686D]">POST /api/bookings with authenticated session</span>
                 </div>
                 <div className="text-center text-[#65686D] select-none text-xs">↓</div>
 
@@ -638,15 +593,15 @@ export default function SckCaseStudyPage() {
 
                 {/* Step 8 */}
                 <div className="p-3 rounded bg-white border border-[#DADCD8] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                  <span className="font-semibold text-[#16181B]">8. Notification Attempt</span>
-                  <span className="text-[#65686D]">Best-effort WhatsApp / email trigger outside transaction</span>
+                  <span className="font-semibold text-[#16181B]">8. Notification Trigger</span>
+                  <span className="text-[#65686D]">Dispatch WhatsApp alert / confirmation message</span>
                 </div>
                 <div className="text-center text-[#65686D] select-none text-xs">↓</div>
 
                 {/* Step 9 */}
                 <div className="p-3 rounded bg-emerald-50 border border-emerald-300 text-emerald-900 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                  <span className="font-semibold">9. Thank-You &amp; Booking Details</span>
-                  <span className="text-emerald-700">Client displays confirmation; redirects to user bookings dashboard</span>
+                  <span className="font-semibold">9. Confirmation &amp; User View</span>
+                  <span className="text-emerald-700">Display confirmation details &amp; update user dashboard</span>
                 </div>
               </div>
             </div>
@@ -670,7 +625,7 @@ export default function SckCaseStudyPage() {
               </div>
 
               <div className="p-5 rounded-lg border border-[#DADCD8] bg-white space-y-3">
-                <span className="font-mono text-xs font-bold uppercase tracking-wider text-red-600 block">
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#3157D5] block">
                   CANCELLATION WORKFLOW
                 </span>
                 <div className="flex items-center gap-1.5 flex-wrap font-mono text-xs text-[#16181B]">
@@ -681,83 +636,7 @@ export default function SckCaseStudyPage() {
                   <span className="px-2 py-0.5 rounded bg-red-100 text-red-800">cancelled</span>
                 </div>
                 <p className="text-xs text-[#65686D] leading-relaxed">
-                  Users can initiate a cancellation request. If denied by an admin, the status reverts to confirmed; if approved, the slot status is returned to available.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-900 leading-relaxed">
-              <strong className="font-semibold">Important Distinction: </strong>
-              This pipeline represents the <em>normal UI flow</em> supported across frontend forms and route handlers. It is not currently backed by a strictly enforced finite state machine in the database layer.
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* 8. Transaction vs concurrency */}
-      <section
-        aria-labelledby="concurrency-deepdive-heading"
-        className="py-16 sm:py-20 border-b border-[#DADCD8] bg-[#F7F7F3]"
-      >
-        <Container>
-          <div className="max-w-4xl space-y-8">
-            <div className="space-y-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                07 / ENGINEERING DEEP-DIVE
-              </span>
-              <h2
-                id="concurrency-deepdive-heading"
-                className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
-              >
-                A transaction does not automatically prevent double booking
-              </h2>
-              <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                One of the most valuable engineering insights gained from auditing the SCK booking flow is that wrapping multi-statement writes inside a database transaction does not by itself solve concurrent race conditions.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-xl border border-[#DADCD8] bg-white space-y-4 text-sm sm:text-base text-[#16181B] leading-relaxed">
-              <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-[#3157D5]">
-                ANATOMY OF THE CHECK-THEN-WRITE RACE CONDITION
-              </h3>
-              <p>
-                In the current implementation, slot availability is verified through an application-level <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">SELECT</code> query prior to starting the database transaction. Once the availability check passes, a PostgreSQL transaction opens to insert the booking, update the slot record, and delete the draft:
-              </p>
-
-              <div className="p-4 rounded-lg bg-[#111418] text-white font-mono text-xs space-y-1">
-                <p className="text-amber-400">{`// 1. Pre-check executed in application code before transaction`}</p>
-                <p>const slot = await db.query.offeringSlots.findFirst({`{ where: eq(offeringSlots.id, slotId) }`});</p>
-                <p>if (slot.status !== &apos;available&apos;) return error(&quot;Slot taken&quot;);</p>
-                <p className="text-white/40 pt-2">{`// 2. Transaction opened`}</p>
-                <p className="text-sky-300">await db.transaction(async (tx) =&gt; {`{`}</p>
-                <p className="pl-4">await tx.insert(bookings).values({`{ slotId, userId, status: &apos;pending&apos; }`});</p>
-                <p className="pl-4 text-red-400">{`// Unconditional update by primary key only`}</p>
-                <p className="pl-4 text-red-400">await tx.update(offeringSlots).set({`{ status: &apos;booked&apos; }`}).where(eq(offeringSlots.id, slotId));</p>
-                <p className="pl-4">await tx.delete(bookingDrafts).where(eq(bookingDrafts.id, draftId));</p>
-                <p className="text-sky-300">{`}`});</p>
-              </div>
-
-              <div className="space-y-3 pt-2 text-xs sm:text-sm text-[#65686D]">
-                <p>
-                  <strong>Why simultaneous requests race:</strong>
-                </p>
-                <ul className="space-y-2 pl-4 list-disc text-[#16181B]">
-                  <li>
-                    <strong>No row-level locking:</strong> The initial check is a non-locking read. There is no explicit <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">SELECT ... FOR UPDATE</code> to block concurrent readers on that slot row.
-                  </li>
-                  <li>
-                    <strong>Unconditional update:</strong> Inside the transaction, the <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">UPDATE</code> statement targets <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">WHERE id = ?</code> rather than checking whether <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">status = &apos;available&apos;</code> at the moment of execution.
-                  </li>
-                  <li>
-                    <strong>Missing unique constraint:</strong> There is no partial unique index or exclusion constraint on the bookings table preventing more than one active record for a given <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">slot_id</code>.
-                  </li>
-                </ul>
-
-                <p className="pt-2">
-                  Under parallel load, if Request A and Request B arrive within milliseconds of each other, both read <code className="font-mono text-xs text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded">status === &apos;available&apos;</code>. Both proceed into their respective transactions under standard PostgreSQL <em>Read Committed</em> isolation. Both transactions commit cleanly, resulting in two separate pending booking records referencing the exact same slot.
-                </p>
-                <p className="italic text-[#65686D]">
-                  Note: This is characterized as an architectural code-level race condition identified during technical review, not an outage that occurred in production traffic.
+                  Users can initiate a cancellation request directly from their dashboard. If reviewed and approved by an administrator, the booking moves to cancelled and the corresponding slot is updated back to available.
                 </p>
               </div>
             </div>
@@ -765,43 +644,7 @@ export default function SckCaseStudyPage() {
         </Container>
       </section>
 
-      {/* 9. Current implementation vs proposed improvement */}
-      <section
-        aria-labelledby="concurrency-comparison-heading"
-        className="py-16 sm:py-20 border-b border-[#DADCD8]"
-      >
-        <Container>
-          <div className="max-w-4xl space-y-8">
-            <div className="space-y-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                08 / CONCURRENCY REMEDIATION
-              </span>
-              <h2
-                id="concurrency-comparison-heading"
-                className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
-              >
-                Current implementation vs proposed improvement
-              </h2>
-              <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                A side-by-side analysis contrasting the existing non-conditional slot assignment against an atomic conditional claim backed by database-level constraints.
-              </p>
-            </div>
-
-            <SckConcurrencyComparison />
-
-            <div className="space-y-4 text-xs sm:text-sm text-[#65686D] leading-relaxed">
-              <p>
-                <strong>The Atomic Conditional Claim Pattern:</strong> By combining the availability check and the state transition into a single SQL statement (<code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded text-[#16181B]">UPDATE ... WHERE id = :slotId AND status = &apos;available&apos; RETURNING id</code>), PostgreSQL takes an exclusive row lock as part of the write.
-              </p>
-              <p>
-                The first transaction to reach the row updates it and receives one returned ID row. Any competing transaction queued behind it on that same row immediately re-evaluates the <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded text-[#16181B]">WHERE status = &apos;available&apos;</code> predicate, finds that the condition no longer holds, and returns 0 rows. The application can immediately abort with an explicit HTTP 409 Conflict without creating orphaned booking records.
-              </p>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* 10. Realtime updates */}
+      {/* 8. Realtime Product Experience */}
       <section
         aria-labelledby="realtime-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8] bg-[#F7F7F3]"
@@ -810,7 +653,7 @@ export default function SckCaseStudyPage() {
           <div className="max-w-4xl space-y-8">
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                09 / REALTIME ARCHITECTURE
+                07 / REALTIME PRODUCT EXPERIENCE
               </span>
               <h2
                 id="realtime-heading"
@@ -819,7 +662,7 @@ export default function SckCaseStudyPage() {
                 Keeping views fresh with database change subscriptions
               </h2>
               <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                SCK utilizes Supabase Postgres Changes subscriptions to push live updates to connected browser clients, ensuring administrators and users see status adjustments without manual page reloads.
+                Supabase-backed Postgres change subscriptions were used to refresh selected booking, administrative, and public views when underlying data changed.
               </p>
             </div>
 
@@ -838,7 +681,7 @@ export default function SckCaseStudyPage() {
                   BACKOFF &amp; JITTER
                 </span>
                 <p className="text-xs text-[#65686D] leading-relaxed">
-                  Subscription managers implement exponential backoff with randomized jitter to prevent reconnect storms from overwhelming server resources after transient network drops.
+                  Subscription managers implement exponential backoff with randomized jitter to manage reconnect attempts smoothly across transient network interruptions.
                 </p>
               </div>
 
@@ -847,24 +690,15 @@ export default function SckCaseStudyPage() {
                   REFETCH ON CHANGE
                 </span>
                 <p className="text-xs text-[#65686D] leading-relaxed">
-                  Event handlers typically trigger targeted HTTP refetches rather than mutating client state in-place, preventing out-of-order event payloads from corrupting local memory.
+                  Event handlers trigger targeted HTTP refetches to retrieve authoritative database records, keeping local client UI state cleanly aligned with server data.
                 </p>
               </div>
-            </div>
-
-            <div className="p-5 rounded-xl border border-amber-300 bg-amber-50 space-y-2 text-xs sm:text-sm text-amber-950">
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-amber-800 block">
-                CRITICAL SYSTEM BOUNDARY: FRESHNESS VS CONSISTENCY
-              </span>
-              <p>
-                <strong>Realtime updates improve freshness; they do not provide transaction locking or booking consistency.</strong> A WebSocket event notifies a client that a slot changed state, but it cannot prevent two active users from submitting bookings at the same moment before the event arrives. Furthermore, certain subscription channels currently lack granular authorization filters and require hardening to avoid broadcasting private tenant events.
-              </p>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* 11. Authentication & authorization */}
+      {/* 9. Authentication & Roles */}
       <section
         aria-labelledby="auth-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8]"
@@ -873,57 +707,73 @@ export default function SckCaseStudyPage() {
           <div className="max-w-4xl space-y-8">
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                10 / AUTHENTICATION &amp; ACCESS CONTROL
+                08 / AUTHENTICATION &amp; ROLES
               </span>
               <h2
                 id="auth-heading"
                 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
               >
-                UI access and API authorization are different
+                Authentication and role-based flows
               </h2>
               <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                Authentication in SCK is implemented via Auth.js / NextAuth credentials provider, utilizing bcrypt password hashing and signed JSON Web Tokens (JWT) stored in HTTP-only cookies.
+                Authentication in SCK is implemented via Auth.js / NextAuth credentials authentication, utilizing bcrypt password hashing and signed JSON Web Tokens (JWT) stored in secure cookies.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="p-6 rounded-lg border border-[#DADCD8] bg-[#F7F7F3] space-y-3">
                 <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#3157D5] block">
-                  ROLE &amp; OWNERSHIP CHECKS
+                  USER ROLE &amp; OWNERSHIP-AWARE FLOWS
                 </span>
                 <ul className="space-y-2 text-xs sm:text-sm text-[#16181B]">
                   <li className="flex items-start gap-2">
                     <span className="text-[#3157D5] font-bold">·</span>
-                    <span><strong>User Role:</strong> Regular authenticated users can submit bookings, view their own booking history, request cancellations on owned records, and submit post-session feedback.</span>
+                    <span>Submit offering bookings and registration requests</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#3157D5] font-bold">·</span>
-                    <span><strong>Admin Role:</strong> Administrative users possess global authority to configure offerings, modify slot schedules, approve or deny cancellations, and trigger broadcasts.</span>
+                    <span>View owned booking history and real-time status transitions</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#3157D5] font-bold">·</span>
-                    <span><strong>Record Ownership:</strong> Detail endpoints verify that <code className="font-mono text-[11px] bg-white px-1 py-0.5 rounded">booking.userId === session.user.id</code> before returning sensitive intake details.</span>
+                    <span>Request session cancellations with record-ownership checks</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#3157D5] font-bold">·</span>
+                    <span>Submit post-session reflections and feedback</span>
                   </li>
                 </ul>
               </div>
 
               <div className="p-6 rounded-lg border border-[#DADCD8] bg-[#F7F7F3] space-y-3">
-                <span className="font-mono text-xs font-bold uppercase tracking-wider text-amber-700 block">
-                  AUTHORIZATION AT THE API BOUNDARY
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#3157D5] block">
+                  ADMINISTRATIVE ACCESS CHECKS
                 </span>
-                <p className="text-xs sm:text-sm text-[#65686D] leading-relaxed">
-                  A central takeaway from code review is that client-side UI restrictions (such as hiding administrative menus or redirecting unauthenticated visitors) are merely navigational enhancements, not security boundaries.
-                </p>
-                <p className="text-xs sm:text-sm text-[#65686D] leading-relaxed">
-                  While core user and admin mutation routes enforce session roles, not every endpoint was initially built with identical authorization rigor. Comprehensive route-level middleware and strict input validation schemas are required to guarantee total API perimeter safety.
-                </p>
+                <ul className="space-y-2 text-xs sm:text-sm text-[#16181B]">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#3157D5] font-bold">·</span>
+                    <span>Configure offerings, dynamic intake questions, &amp; session locations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#3157D5] font-bold">·</span>
+                    <span>Manage calendar schedules and individual slot availability</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#3157D5] font-bold">·</span>
+                    <span>Review booking submissions, confirm payments, &amp; process cancellations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#3157D5] font-bold">·</span>
+                    <span>Manage public content updates and broadcast communication triggers</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* 12. Notifications & communication */}
+      {/* 10. Communication Integrations */}
       <section
         aria-labelledby="notifications-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8] bg-[#F7F7F3]"
@@ -932,23 +782,23 @@ export default function SckCaseStudyPage() {
           <div className="max-w-4xl space-y-8">
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                11 / COMMUNICATION PIPELINES
+                09 / COMMUNICATION INTEGRATIONS
               </span>
               <h2
                 id="notifications-heading"
                 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
               >
-                Best-effort communication workflows
+                Integrated communication workflows
               </h2>
               <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                SCK incorporates automated communication touchpoints across user registration, booking milestones, and practitioner outreach.
+                Integrated communication flows included WhatsApp-based OTP and booking notifications, scheduled messaging workflows, and email-based password recovery.
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="p-5 rounded-lg border border-[#DADCD8] bg-white space-y-2">
                 <span className="font-mono text-xs font-semibold text-[#16181B] block">
-                  WhatsApp OTP &amp; Verification
+                  WhatsApp OTP Verification
                 </span>
                 <p className="text-xs text-[#65686D]">
                   Phone verification messages dispatched via external WhatsApp gateway to confirm participant contact numbers upon registration.
@@ -959,7 +809,7 @@ export default function SckCaseStudyPage() {
                   Booking Confirmation Alerts
                 </span>
                 <p className="text-xs text-[#65686D]">
-                  Automated notification pings dispatched to user and practitioner WhatsApp channels following successful booking transaction commits.
+                  Notification alerts dispatched to user and practitioner WhatsApp channels following successful booking transaction commits.
                 </p>
               </div>
               <div className="p-5 rounded-lg border border-[#DADCD8] bg-white space-y-2">
@@ -980,10 +830,10 @@ export default function SckCaseStudyPage() {
               </div>
               <div className="p-5 rounded-lg border border-[#DADCD8] bg-white space-y-2">
                 <span className="font-mono text-xs font-semibold text-[#16181B] block">
-                  Scheduled Birthday Greets
+                  Scheduled Messages
                 </span>
                 <p className="text-xs text-[#65686D]">
-                  Automated background cron triggers dispatching personalized wellness wishes to active community members.
+                  Background scheduling routines to dispatch personalized wellness wishes and event reminders to active community members.
                 </p>
               </div>
               <div className="p-5 rounded-lg border border-[#DADCD8] bg-white space-y-2">
@@ -995,16 +845,11 @@ export default function SckCaseStudyPage() {
                 </p>
               </div>
             </div>
-
-            <div className="p-4 rounded-lg bg-white border border-[#DADCD8] text-xs text-[#65686D] leading-relaxed">
-              <strong className="text-[#16181B]">Delivery Semantics: </strong>
-              These are <em>best-effort notification and scheduled communication workflows</em>. The system does not implement guaranteed delivery, exactly-once processing, or durable transactional outbox queuing. If an external API timeout occurs after a database transaction commits, the booking remains valid while the notification failure is logged.
-            </div>
           </div>
         </Container>
       </section>
 
-      {/* 13. Engineering audit / lessons */}
+      {/* 11. Engineering Lessons */}
       <section
         aria-labelledby="audit-lessons-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8]"
@@ -1013,20 +858,20 @@ export default function SckCaseStudyPage() {
           <div className="max-w-4xl space-y-8">
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                12 / ENGINEERING AUDIT
+                10 / ENGINEERING LESSONS
               </span>
               <h2
                 id="audit-lessons-heading"
                 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
               >
-                What reviewing the system taught me
+                Engineering lessons from collaborative delivery
               </h2>
               <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                Analyzing our team’s implementation provided valuable lessons in system design, the difference between relational atomicity and concurrency control, and the discipline required to build resilient multi-user web platforms.
+                Reflecting on our 3-person team experience building SCK yielded valuable insights into collaborative architecture, data integrity, and cross-functional feature completion.
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {lessons.map((item, index) => (
                 <div
                   key={item.title}
@@ -1034,7 +879,7 @@ export default function SckCaseStudyPage() {
                 >
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-xs font-bold text-[#3157D5]">
-                      LESSON 0{index + 1}
+                      0{index + 1}
                     </span>
                     <span className="text-[#65686D]">·</span>
                     <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-[#16181B]">
@@ -1051,7 +896,7 @@ export default function SckCaseStudyPage() {
         </Container>
       </section>
 
-      {/* 14. Technology used */}
+      {/* 12. Technology Used */}
       <section
         aria-labelledby="tech-stack-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8] bg-[#F7F7F3]"
@@ -1060,7 +905,7 @@ export default function SckCaseStudyPage() {
           <div className="max-w-4xl space-y-8">
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                13 / SYSTEM STACK
+                11 / SYSTEM STACK
               </span>
               <h2
                 id="tech-stack-heading"
@@ -1097,7 +942,7 @@ export default function SckCaseStudyPage() {
         </Container>
       </section>
 
-      {/* 15. Screenshots */}
+      {/* 13. Product Screenshots */}
       <section
         aria-labelledby="screenshots-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8]"
@@ -1106,7 +951,7 @@ export default function SckCaseStudyPage() {
           <div className="max-w-4xl space-y-8">
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                14 / PRODUCT INTERFACE
+                12 / PRODUCT INTERFACE
               </span>
               <h2
                 id="screenshots-heading"
@@ -1124,59 +969,7 @@ export default function SckCaseStudyPage() {
         </Container>
       </section>
 
-      {/* 16. What I would improve */}
-      <section
-        aria-labelledby="hardening-heading"
-        className="py-16 sm:py-20 border-b border-[#DADCD8] bg-[#F7F7F3]"
-      >
-        <Container>
-          <div className="max-w-4xl space-y-8">
-            <div className="space-y-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                15 / FUTURE HARDENING
-              </span>
-              <h2
-                id="hardening-heading"
-                className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
-              >
-                What I would harden next
-              </h2>
-              <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                Ten prioritized architectural improvements proposed to transition the platform from an effective team product into an enterprise-grade, concurrency-safe production deployment.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {hardeningPriorities.map((item) => (
-                <div
-                  key={item.num}
-                  className="p-5 rounded-lg border border-[#DADCD8] bg-white space-y-2"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-[#3157D5]">
-                      {item.num}
-                    </span>
-                    <span className="text-[#65686D]">·</span>
-                    <h3 className="font-semibold text-xs sm:text-sm text-[#16181B]">
-                      {item.title}
-                    </h3>
-                  </div>
-                  <p className="text-xs text-[#65686D] leading-relaxed pl-6">
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="p-4 rounded-lg bg-white border border-[#DADCD8] text-xs text-[#65686D]">
-              <strong className="text-[#16181B]">Status: </strong>
-              These architectural enhancements are documented as technical recommendations derived from comprehensive code audit and are <em>not currently implemented in the live deployment</em>.
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* 17. Next navigation */}
+      {/* 14. Final Navigation */}
       <nav
         aria-label="Portfolio case study navigation"
         className="py-16 sm:py-20 border-t border-[#DADCD8] bg-white"
