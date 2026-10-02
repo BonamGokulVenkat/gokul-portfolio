@@ -7,12 +7,16 @@ interface CaseStudyHeroProps {
   title: string;
   subtitle: string;
   summary: string;
-  metadata: {
+  metadata?: {
     role: string;
     context: string;
     focus: string;
     stack: string;
   };
+  metaItems?: {
+    label: string;
+    value: string;
+  }[];
   backHref?: string;
   backLabel?: string;
 }
@@ -23,9 +27,21 @@ export function CaseStudyHero({
   subtitle,
   summary,
   metadata,
+  metaItems,
   backHref = "/#work",
   backLabel = "Back to selected work",
 }: CaseStudyHeroProps) {
+  const displayItems =
+    metaItems ||
+    (metadata
+      ? [
+          { label: "ROLE", value: metadata.role },
+          { label: "CONTEXT", value: metadata.context },
+          { label: "FOCUS", value: metadata.focus },
+          { label: "STACK", value: metadata.stack },
+        ]
+      : []);
+
   return (
     <header className="pt-12 pb-14 sm:pt-16 sm:pb-20 border-b border-[#DADCD8] bg-[#F7F7F3]">
       <Container>
@@ -56,40 +72,20 @@ export function CaseStudyHero({
           </p>
 
           {/* Metadata Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-[#DADCD8]">
-            <div className="space-y-1">
-              <span className="font-mono text-[11px] uppercase tracking-wider text-[#65686D] block">
-                ROLE
-              </span>
-              <p className="text-sm font-semibold text-[#16181B]">
-                {metadata.role}
-              </p>
+          {displayItems.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-[#DADCD8]">
+              {displayItems.map((item) => (
+                <div key={item.label} className="space-y-1">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[#65686D] block">
+                    {item.label}
+                  </span>
+                  <p className="text-sm font-semibold text-[#16181B]">
+                    {item.value}
+                  </p>
+                </div>
+              ))}
             </div>
-            <div className="space-y-1">
-              <span className="font-mono text-[11px] uppercase tracking-wider text-[#65686D] block">
-                CONTEXT
-              </span>
-              <p className="text-sm font-semibold text-[#16181B]">
-                {metadata.context}
-              </p>
-            </div>
-            <div className="space-y-1">
-              <span className="font-mono text-[11px] uppercase tracking-wider text-[#65686D] block">
-                FOCUS
-              </span>
-              <p className="text-sm font-semibold text-[#16181B]">
-                {metadata.focus}
-              </p>
-            </div>
-            <div className="space-y-1">
-              <span className="font-mono text-[11px] uppercase tracking-wider text-[#65686D] block">
-                STACK
-              </span>
-              <p className="text-sm font-semibold text-[#16181B]">
-                {metadata.stack}
-              </p>
-            </div>
-          </div>
+          )}
         </div>
       </Container>
     </header>
