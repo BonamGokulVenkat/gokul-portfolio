@@ -219,7 +219,7 @@ export default function AgenticIdsResearchPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-[#3157D5] font-bold">·</span>
-                      <span>Continuous traffic numerical features were scaled via min-max normalization to stabilize gradient propagation.</span>
+                      <span>Numerical features were standardized using Z-score normalization so that values were centered around a mean of 0 with a standard deviation of 1.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-[#3157D5] font-bold">·</span>
@@ -745,10 +745,10 @@ export default function AgenticIdsResearchPage() {
               <ul className="space-y-3 text-xs sm:text-sm text-[#16181B]">
                 {[
                   "Dataset Specificity: All experiments were conducted strictly on the UNSW-NB15 benchmark dataset. The findings do not prove equivalent accuracy across live enterprise network traffic.",
-                  "Absence of Hardware Integration: No physical firewall, eBPF packet filter, or switch control plane integration was implemented; action outputs were simulated within the experimental testbed.",
-                  "Throughput and Latency Constraints: The study evaluated offline classification efficacy. Real-world line-rate packet processing (10 Gbps+) presents latency boundaries that were not benchmarked.",
+                  "Absence of Hardware Integration: Interaction with firewall devices was not demonstrated in this study; response actions were evaluated within the experimental setup.",
+                  "Throughput and Latency Constraints: The study evaluated offline classification efficacy. Low-latency operational requirements were not benchmarked.",
                   "Empirical Decision Thresholds: Parameters for risk fusion (β, γ) and action thresholds (α, θ₁, θ₂) were empirically chosen for this benchmark and would require environment-specific calibration.",
-                  "Concept Drift & Zero-Days: The models assume a stationary statistical distribution between train and test partitions. Real-world concept drift and emergent zero-day exploits remain unaddressed.",
+                  "Concept Drift & Novel Attacks: The models assume a stationary statistical distribution between train and test partitions. Adapting to concept drift and novel attack modes remains unaddressed.",
                   "Availability vs. Security Trade-offs: Automated blocking can inadvertently create self-inflicted denial-of-service conditions if false-positive rates spike against critical business workflows.",
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3">
@@ -789,20 +789,24 @@ export default function AgenticIdsResearchPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 {
-                  title: "Reinforcement Learning in Decision Layer",
-                  desc: "Replacing static threshold equations with an RL agent optimized against reward functions balancing attack mitigation against false-positive service disruption.",
+                  title: "Reinforcement Learning in the Agentic Decision Layer",
+                  desc: "Investigating reinforcement learning techniques in the autonomous decision layer to dynamically adapt threat response policies and action selection beyond static threshold equations.",
                 },
                 {
-                  title: "Live Traffic Capture & Streaming Inference",
-                  desc: "Benchmarking streaming inference pipelines using live PCAP ingestion and kernel-bypass packet processing frameworks.",
+                  title: "Real-Time / Live Network Traffic Capture",
+                  desc: "Extending evaluation beyond static benchmark records to real-time and live network traffic capture to validate detection and response behavior on dynamic network streams.",
                 },
                 {
-                  title: "Firewall & Hardware Integration",
-                  desc: "Connecting the decision engine directly to Linux iptables, nftables, or programmable P4 switches for automated rule injection.",
+                  title: "Low-Latency Inference & Interaction with Firewall Devices",
+                  desc: "Optimizing multi-task model inference to satisfy low-latency operational requirements and supporting interaction with firewall devices for automated action execution.",
                 },
                 {
-                  title: "Online Adaptation & Concept Drift Handling",
-                  desc: "Investigating continual and incremental learning architectures capable of adapting to shifting network traffic patterns without catastrophic forgetting.",
+                  title: "Online & Incremental Learning",
+                  desc: "Developing online learning and incremental learning pipelines to continuously incorporate newly observed traffic data without requiring full retraining cycles.",
+                },
+                {
+                  title: "Adaptation to Concept Drift & Novel Attack Modes",
+                  desc: "Designing adaptive mechanisms to recognize shifting network traffic distributions and handle novel, previously unseen attack modes.",
                 },
               ].map((item) => (
                 <div

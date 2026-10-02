@@ -7,7 +7,7 @@ export function ResearchArchitectureDiagram() {
       aria-label="Research System Architecture: from raw UNSW-NB15 flow data through preprocessing, mutual-information feature selection, multi-task deep representation, and agentic decision engine to automated response actions."
     >
       <div className="sr-only">
-        System Architecture flow description: The pipeline ingests UNSW-NB15 network flow data, performs numeric encoding, scaling, and stratified splitting. Next, mutual-information feature selection extracts the top 25 features. These are passed to a shared deep-learning feature representation that branches into two heads: binary detection (normal vs attack) and multiclass classification (attack categories). Their joint prediction confidence and severity vectors feed into the agentic decision engine, which fuses instantaneous severity, temporal severity, system criticality, and uncertainty to select an ALLOW, MONITOR, or BLOCK action, concluding with decision logging and alerting.
+        System Architecture flow description: The pipeline ingests UNSW-NB15 network flow data, performs numeric encoding, Z-score normalization, and stratified splitting. Next, mutual-information feature selection extracts the top 25 features. These are passed to a shared deep-learning feature representation that branches into two heads: binary detection (normal vs attack) and multiclass classification (attack categories). Their joint prediction confidence and severity vectors feed into the agentic decision engine, which fuses instantaneous severity, temporal severity, system criticality, and uncertainty to select an ALLOW, MONITOR, or BLOCK action, concluding with decision logging and alerting.
       </div>
 
       <div className="flex flex-col items-center space-y-3 sm:space-y-4 max-w-2xl mx-auto">
@@ -33,7 +33,7 @@ export function ResearchArchitectureDiagram() {
             02 / PREPROCESSING
           </span>
           <p className="font-bold text-[#16181B] text-sm mt-0.5">
-            Data Cleaning, Normalization &amp; Categorical Encoding
+            Data Cleaning, Z-Score Normalization &amp; Categorical Encoding
           </p>
           <p className="text-[11px] text-[#65686D] mt-0.5 font-sans">
             Stratified 80/20 train-test split · Rare attacks mapped to OTHER
