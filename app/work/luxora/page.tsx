@@ -36,15 +36,15 @@ export default function LuxoraCaseStudyPage() {
       points: [
         "Browse and search multi-tier property listings",
         "Save favorite properties and track updates",
-        "Inspect verified builder profiles and past deliverables",
+        "Inspect builder profiles and published portfolio information",
         "Engage with the conversational property advisor",
       ],
     },
     {
       role: "BUILDERS",
       points: [
-        "Draft and publish residential/commercial listings",
-        "Manage owned inventory and track viewer inquiries",
+        "Create and manage residential/commercial listing submissions",
+        "Manage owned inventory and property inquiries",
         "Request property edits and deletions via review queues",
         "Operate within active plan listing quotas",
       ],
@@ -93,65 +93,26 @@ export default function LuxoraCaseStudyPage() {
     },
   ];
 
-  const auditItems = [
-    {
-      area: "Authorization",
-      implemented: "JWT guards, admin routes, and property ownership checks.",
-      hardening:
-        "Public role registration and sensitive response projections require tighter validation and field stripping.",
-    },
-    {
-      area: "Uploads",
-      implemented: "Supabase media storage integration for listing assets.",
-      hardening:
-        "Backend authentication verification, file-size/MIME-type enforcement, and user ownership validation on upload paths.",
-    },
-    {
-      area: "Payments",
-      implemented: "Razorpay order creation and HMAC-SHA256 signature verification.",
-      hardening:
-        "Server-side binding between user, plan, amount, and order ID; replay protection and idempotency keys.",
-    },
-    {
-      area: "Moderation",
-      implemented: "New listing review, edit snapshot isolation, and delete review queues.",
-      hardening:
-        "Strict database-level source state transition enforcement, transactional commits, and concurrency lock handling.",
-    },
-    {
-      area: "Subscriptions",
-      implemented: "Plan tiers, listing quota limits, and entitlement fields.",
-      hardening:
-        "Atomic quota decrement/increment updates and defined renewal/lifecycle state semantics.",
-    },
-    {
-      area: "OAuth",
-      implemented: "Google and LinkedIn OAuth authentication integration paths.",
-      hardening:
-        "Secure state parameter validation, CSRF session handling, and robust account-linking rules.",
-    },
-  ];
-
   const lessons = [
     {
       title: "Structured Data Before Generation",
-      body: "LLMs should not invent property facts when canonical database records exist. Natural language is best used for intent parsing and synthesized summaries over verified records.",
+      body: "Property recommendations should remain grounded in canonical database records. Natural language is most useful for interpreting intent and presenting verified listing facts clearly.",
     },
     {
-      title: "Backend Authorization Matters",
-      body: "Hiding an administrative button in the UI is not an access control boundary. Route guards, role verification, and record ownership must be enforced at the API controller and service layers.",
+      title: "Authorization Is Domain Logic",
+      body: "Role checks and record ownership are part of business correctness, not only interface behavior. Access rules need to be enforced where application actions are executed.",
     },
     {
-      title: "State Machines Need Enforcement",
-      body: "Displaying correct status badges in the UI is trivial compared to strictly preventing invalid state transitions (such as approving an already rejected item) at the database level.",
+      title: "Workflow State Needs Clear Modeling",
+      body: "Moderation becomes easier to reason about when pending edits and delete requests are represented explicitly instead of silently mutating live listing data.",
     },
     {
-      title: "Payments Require Entitlement Design",
-      body: "A valid payment provider HMAC signature alone is not a complete business model; server-side order amount verification and atomic entitlement binding are mandatory.",
+      title: "Payments Connect to Entitlements",
+      body: "A checkout flow is only one part of subscription design; application access, plan limits, and listing entitlements also need clear server-side state.",
     },
     {
-      title: "Concurrency Changes Design",
-      body: "Check-then-write logic (such as checking listing limits before publishing) requires transactions, database constraints, or atomic operations to remain reliable under concurrent requests.",
+      title: "Search Should Be Explainable",
+      body: "Structured constraints and deterministic preference scoring make property recommendations easier to inspect, test, and keep grounded in inventory data.",
     },
   ];
 
@@ -183,19 +144,6 @@ export default function LuxoraCaseStudyPage() {
       category: "Testing / Quality",
       items: ["Jest", "TypeScript", "Regression Test Suites"],
     },
-  ];
-
-  const improvements = [
-    "Restrict public role assignment and lock administrative user provisioning behind root controls",
-    "Sanitize public API response projections to eliminate sensitive account metadata",
-    "Authenticate and enforce strict file-type/size boundaries on media upload paths",
-    "Bind payment order + user + plan + amount server-side before signature validation",
-    "Add idempotent payment records and an immutable billing transaction log",
-    "Enforce moderation status transitions transactionally with state-machine guards",
-    "Make subscription listing quota deductions atomic to prevent race-condition overages",
-    "Harden OAuth session/state parameters and resolve edge cases in account linking",
-    "Add workload-driven relational indexes based on EXPLAIN ANALYZE query profiling",
-    "Establish end-to-end integration testing pipelines covering third-party webhooks",
   ];
 
   return (
@@ -232,7 +180,7 @@ export default function LuxoraCaseStudyPage() {
                 More than a listing website
               </h2>
               <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                A multi-tenant marketplace connecting three distinct operational roles with tailored permissions, interfaces, and constraints.
+                A role-based marketplace connecting three distinct user groups with tailored permissions, interfaces, and workflows.
               </p>
             </div>
 
@@ -413,7 +361,7 @@ export default function LuxoraCaseStudyPage() {
                 Search Request Lifecycle
               </h2>
               <p className="text-base text-[#65686D] leading-relaxed">
-                Deterministic request flow from client prompt to database-grounded response cards with zero hallucinated listings.
+                Deterministic request flow from client prompt to database-grounded response cards designed to keep listing facts tied to canonical records.
               </p>
             </div>
 
@@ -440,7 +388,7 @@ export default function LuxoraCaseStudyPage() {
                 Keeping live listings separate from pending changes
               </h2>
               <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                In a real-estate marketplace, a builder updating an asking price or floor plan cannot corrupt an active, publicly visible listing. We architected edit requests as independent snapshot records rather than directly mutating live rows.
+                For listing moderation, pending edits should remain separate from the currently visible property record until review is complete. The project represents edit requests as independent snapshot records rather than directly mutating the live listing row.
               </p>
             </div>
 
@@ -568,70 +516,11 @@ export default function LuxoraCaseStudyPage() {
                 </div>
               </div>
             </div>
-
-            <p className="text-xs text-[#65686D] leading-relaxed">
-              * Note: While HMAC signature verification is implemented, production readiness would require server-side amount binding, idempotent transaction ledgers, and recurring webhooks.
-            </p>
           </div>
         </Container>
       </section>
 
-      {/* 11. Engineering audit: feature-complete vs production-safe */}
-      <section
-        aria-labelledby="audit-heading"
-        className="py-16 sm:py-20 border-b border-[#DADCD8]"
-      >
-        <Container>
-          <div className="max-w-4xl space-y-8">
-            <div className="space-y-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                10 / ARCHITECTURAL AUDIT
-              </span>
-              <h2
-                id="audit-heading"
-                className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
-              >
-                Feature-complete is not the same as production-safe
-              </h2>
-              <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                After the main feature work, I performed a deeper source-level audit of the application. It exposed an important distinction between functionality that works in normal flows and controls required for production safety.
-              </p>
-            </div>
-
-            {/* Audit Comparison Table */}
-            <div className="rounded-xl border border-[#DADCD8] bg-white overflow-hidden shadow-2xs">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs sm:text-sm">
-                  <thead>
-                    <tr className="bg-[#F7F7F3] border-b border-[#DADCD8] font-mono text-xs text-[#65686D]">
-                      <th className="p-4 uppercase tracking-wider">Area</th>
-                      <th className="p-4 uppercase tracking-wider">Implemented Behavior</th>
-                      <th className="p-4 uppercase tracking-wider">Production Hardening Needed</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[#DADCD8]">
-                    {auditItems.map((item) => (
-                      <tr key={item.area} className="hover:bg-[#F7F7F3]/50 transition-colors">
-                        <td className="p-4 font-mono font-bold text-[#16181B] whitespace-nowrap">
-                          {item.area}
-                        </td>
-                        <td className="p-4 text-[#16181B] leading-relaxed">
-                          {item.implemented}
-                        </td>
-                        <td className="p-4 text-[#65686D] leading-relaxed">
-                          {item.hardening}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* 12. Engineering lessons */}
+      {/* 11. Engineering lessons */}
       <section
         aria-labelledby="lessons-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8]"
@@ -670,7 +559,7 @@ export default function LuxoraCaseStudyPage() {
         </Container>
       </section>
 
-      {/* 13. Technology used */}
+      {/* 12. Technology used */}
       <section
         aria-labelledby="tech-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8]"
@@ -713,45 +602,7 @@ export default function LuxoraCaseStudyPage() {
         </Container>
       </section>
 
-      {/* 14. What I would improve */}
-      <section
-        aria-labelledby="improvements-heading"
-        className="py-16 sm:py-20 border-b border-[#DADCD8]"
-      >
-        <Container>
-          <div className="max-w-4xl space-y-8">
-            <div className="space-y-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                13 / SYSTEM ROADMAP
-              </span>
-              <h2
-                id="improvements-heading"
-                className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
-              >
-                What I would harden next
-              </h2>
-              <p className="text-base text-[#65686D] leading-relaxed">
-                Prioritized architectural enhancements identified during audit for scaling into production:
-              </p>
-            </div>
-
-            <div className="p-6 rounded-xl border border-[#DADCD8] bg-white space-y-3">
-              <ul className="space-y-3 text-sm text-[#16181B]">
-                {improvements.map((item, idx) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="text-[#3157D5] font-mono font-bold">
-                      {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}.
-                    </span>
-                    <span className="leading-relaxed">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* 15. Screenshots */}
+      {/* 14. Screenshots */}
       <section
         aria-labelledby="screenshots-heading"
         className="py-16 sm:py-20 border-b border-[#DADCD8]"
@@ -769,7 +620,7 @@ export default function LuxoraCaseStudyPage() {
                 Product Experience
               </h2>
               <p className="text-base text-[#65686D] leading-relaxed">
-                Sanitized interface representations demonstrating search, property moderation, and administration:
+                Real project interfaces demonstrating property discovery, conversational search, moderation, and administration:
               </p>
             </div>
 

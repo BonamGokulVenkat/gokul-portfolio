@@ -118,7 +118,7 @@ export default function SckCaseStudyPage() {
   const techStack = [
     {
       category: "APPLICATION",
-      items: ["Next.js (App Router)", "React 18", "TypeScript"],
+      items: ["Next.js (App Router)", "React 19.2.4", "TypeScript"],
     },
     {
       category: "DATA",
@@ -250,7 +250,7 @@ export default function SckCaseStudyPage() {
                     DIRECT IMPLEMENTATION
                   </span>
                   <span className="font-mono text-[10px] bg-[#3157D5] text-white px-2 py-0.5 rounded">
-                    Sole Author
+                    Direct Contribution
                   </span>
                 </div>
                 <p className="text-xs text-[#65686D]">
@@ -291,7 +291,7 @@ export default function SckCaseStudyPage() {
                     COLLABORATIVE CONTRIBUTION
                   </span>
                   <span className="font-mono text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded">
-                    Co-Developed
+                    Collaborative
                   </span>
                 </div>
                 <p className="text-xs text-[#65686D]">
@@ -312,7 +312,7 @@ export default function SckCaseStudyPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-amber-600">↔</span>
-                    <span>Route handler payload wiring</span>
+                    <span>Booking-flow integration support</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-amber-600">↔</span>
@@ -449,7 +449,7 @@ export default function SckCaseStudyPage() {
                 In a three-person team, feature delivery rarely occurs in strict isolation. While teammates established the foundational Drizzle schemas and API controllers, I participated actively in verifying that the multi-step booking funnel operated reliably from the user’s perspective.
               </p>
               <p>
-                This collaborative work involved diagnosing payload discrepancies between client forms and route handlers, testing how draft state persisted across browser refreshes, reviewing cancellation edge cases, and ensuring that slot selection feedback rendered cleanly on both desktop and mobile viewports.
+                This collaborative work focused on helping connect the booking journey end to end, debugging integration issues, testing user flows, and supporting teammates as booking-related features were completed.
               </p>
             </div>
           </div>
@@ -486,7 +486,7 @@ export default function SckCaseStudyPage() {
                   Unified Process Benefits
                 </span>
                 <p>
-                  Zero cross-service network overhead for server components, collocated route handlers, unified TypeScript type sharing between Drizzle schema and client views, and simplified containerized deployments.
+                  Keeping the application in one Next.js codebase avoids a separate application-service network hop for collocated server logic and makes it easier to share TypeScript types and conventions across server and client code.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white border border-[#DADCD8] space-y-1">
@@ -574,7 +574,7 @@ export default function SckCaseStudyPage() {
                 {/* Step 6 */}
                 <div className="p-3 rounded bg-white border border-[#DADCD8] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
                   <span className="font-semibold text-[#16181B]">6. Server Validates Core Fields</span>
-                  <span className="text-[#65686D]">Ensure offering exists, slot is active, user is valid</span>
+                  <span className="text-[#65686D]">Validate core booking fields and related records</span>
                 </div>
                 <div className="text-center text-[#65686D] select-none text-xs">↓</div>
 
@@ -717,7 +717,7 @@ export default function SckCaseStudyPage() {
                 Authentication and role-based flows
               </h2>
               <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                Authentication in SCK is implemented via Auth.js / NextAuth credentials authentication, utilizing bcrypt password hashing and signed JSON Web Tokens (JWT) stored in secure cookies.
+                Authentication in SCK uses Auth.js / NextAuth credentials authentication with bcrypt password hashing and JWT-backed sessions.
               </p>
             </div>
 
@@ -733,7 +733,7 @@ export default function SckCaseStudyPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#3157D5] font-bold">·</span>
-                    <span>View owned booking history and real-time status transitions</span>
+                    <span>View owned booking history and updated booking statuses</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#3157D5] font-bold">·</span>
@@ -807,10 +807,10 @@ export default function SckCaseStudyPage() {
               </div>
               <div className="p-5 rounded-lg border border-[#DADCD8] bg-white space-y-2">
                 <span className="font-mono text-xs font-semibold text-[#16181B] block">
-                  Booking Confirmation Alerts
+                  Booking Status Notifications
                 </span>
                 <p className="text-xs text-[#65686D]">
-                  Notification alerts dispatched to user and practitioner WhatsApp channels following successful booking transaction commits.
+                  WhatsApp notifications support booking-related status communication between the platform, users, and practitioners.
                 </p>
               </div>
               <div className="p-5 rounded-lg border border-[#DADCD8] bg-white space-y-2">
@@ -834,7 +834,7 @@ export default function SckCaseStudyPage() {
                   Scheduled Messages
                 </span>
                 <p className="text-xs text-[#65686D]">
-                  Background scheduling routines to dispatch personalized wellness wishes and event reminders to active community members.
+                  Background scheduling routines support scheduled broadcasts and birthday messages for community communication.
                 </p>
               </div>
               <div className="p-5 rounded-lg border border-[#DADCD8] bg-white space-y-2">
@@ -842,7 +842,7 @@ export default function SckCaseStudyPage() {
                   Email Password Recovery
                 </span>
                 <p className="text-xs text-[#65686D]">
-                  Secure password reset token generation dispatched through Nodemailer SMTP transport to verified email accounts.
+                  Password-reset tokens are delivered through Nodemailer SMTP as part of the account-recovery flow.
                 </p>
               </div>
             </div>
@@ -1023,8 +1023,8 @@ export default function SckCaseStudyPage() {
                 <span className="font-mono text-[10px] uppercase tracking-wider text-[#65686D] group-hover:text-[#3157D5]">
                   CASE STUDY / 01
                 </span>
-                <p className="text-sm font-bold text-[#16181B]">REX Sync Engine</p>
-                <p className="text-xs text-[#65686D]">Offline-first, CRDT &amp; SQLite</p>
+                <p className="text-sm font-bold text-[#16181B]">REX</p>
+                <p className="text-xs text-[#65686D]">Java · Spring Boot · PostgreSQL backend engineering</p>
               </Link>
 
               <Link

@@ -127,13 +127,6 @@ export default function RexCaseStudyPage() {
     },
   ];
 
-  const futureImprovements = [
-    "Explicit idempotency strategy for synchronization acknowledgements across network retries",
-    "Stronger retry and exponential backoff policies with dead-letter handling for repeatedly failing records",
-    "A durable, queryable synchronization audit trail and operational metrics alerting",
-    "Distributed lock/concurrency protection if multiple scheduler instances can execute simultaneously",
-  ];
-
   return (
     <article className="min-h-screen">
       {/* 1. Case-study hero */}
@@ -224,7 +217,7 @@ export default function RexCaseStudyPage() {
                     "Event workflow changes & booking closure rules",
                     "Invoice responsibility delegation & active assignments",
                     "Data-change support for the contributed workflows",
-                    "Integration testing and implementation documentation",
+                    "API testing and QA issue resolution",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2">
                       <span className="text-[#3157D5] select-none font-bold">✓</span>
@@ -332,8 +325,7 @@ export default function RexCaseStudyPage() {
                     key={step}
                     className="p-3 rounded bg-[#F7F7F3] border border-[#DADCD8] text-xs leading-normal"
                   >
-                    {step}
-                  </div>
+                    {step}</div>
                 ))}
               </div>
             </div>
@@ -440,14 +432,14 @@ export default function RexCaseStudyPage() {
                 Financial Validation &amp; Access Controls
               </h3>
               <p className="text-sm sm:text-base text-[#65686D] leading-relaxed">
-                Receipts in an expense system require strict alignment between creation, modification, and approval. I implemented and normalized validation logic across financial amounts, date ranges, and contextual rate rules, ensuring identical validation holds whether a record is initially created or later amended.
+                Receipts in an expense system depend on consistent validation across create and edit operations. I worked on validation behavior covering financial amounts, date ranges, and contextual rate rules so that related workflows followed the same business rules.
               </p>
               <div className="pt-2 text-sm text-[#16181B] space-y-2 bg-[#F7F7F3] p-4 rounded border border-[#DADCD8]">
                 <p className="font-semibold font-mono text-xs text-[#65686D] uppercase">
                   Authorization Distinctions:
                 </p>
                 <p className="text-xs leading-relaxed text-[#65686D]">
-                  Separated owner permissions (the employee who accrued the expense) from submitter permissions (an administrative assistant filing on their behalf) and deputy/delegated approvals. Enforced tenant boundaries on every lookup to guarantee complete isolation.
+                  Separated owner, submitter, and delegated-access behavior and kept the relevant lookups tenant-scoped so authorization decisions remained aligned with the existing platform context.
                 </p>
               </div>
             </div>
@@ -504,12 +496,12 @@ export default function RexCaseStudyPage() {
                 Dynamic Responsibility Assignment
               </h3>
               <p className="text-sm sm:text-base text-[#65686D] leading-relaxed">
-                In complex organizations, invoice ownership frequently transfers when an employee is on leave, changes departments, or exceeds local sign-off limits. I implemented backend logic to delegate invoice review responsibility safely.
+                I implemented backend support for delegating invoice responsibility while preserving the platform’s existing validation and authorization rules.
               </p>
               <ul className="space-y-2 text-sm text-[#65686D]">
                 <li className="flex items-start gap-2">
                   <span className="text-[#3157D5] font-bold">·</span>
-                  <span><strong>Target Validation:</strong> Verified that the delegated user possesses active status, proper organizational role, and belongs to the exact matching tenant.</span>
+                  <span><strong>Target Validation:</strong> Validated the target against applicable state, tenant context, and assignment conditions before delegation.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#3157D5] font-bold">·</span>
@@ -517,7 +509,7 @@ export default function RexCaseStudyPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#3157D5] font-bold">·</span>
-                  <span><strong>Enriched Responses:</strong> Extended retrieval DTOs to surface active delegation records and previous assignment history for transparent operational visibility.</span>
+                  <span><strong>Enriched Responses:</strong> Extended retrieval DTOs to surface active delegation or assignment information needed by the workflow.</span>
                 </li>
               </ul>
             </div>
@@ -602,42 +594,6 @@ export default function RexCaseStudyPage() {
                   </ul>
                 </div>
               ))}
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* 10. What I would improve / explore further */}
-      <section
-        aria-labelledby="future-heading"
-        className="py-16 sm:py-20 border-b border-[#DADCD8]"
-      >
-        <Container>
-          <div className="max-w-4xl space-y-8">
-            <div className="space-y-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                09 / FUTURE ARCHITECTURE
-              </span>
-              <h2
-                id="future-heading"
-                className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
-              >
-                If I were extending the integration further
-              </h2>
-              <p className="text-base text-[#65686D] leading-relaxed">
-                Areas I would evaluate as the integration grows to handle larger enterprise scales and higher concurrency:
-              </p>
-            </div>
-
-            <div className="p-6 rounded-xl border border-[#DADCD8] bg-white space-y-3">
-              <ul className="space-y-3 text-sm text-[#16181B]">
-                {futureImprovements.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="text-[#3157D5] font-mono font-bold">→</span>
-                    <span className="leading-relaxed">{item}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </Container>
