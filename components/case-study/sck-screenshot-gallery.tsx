@@ -93,7 +93,7 @@ export function SckScreenshotGallery() {
                 <span className="w-2.5 h-2.5 rounded-full bg-[#DADCD8]" />
                 <span className="w-2.5 h-2.5 rounded-full bg-[#DADCD8]" />
                 <span className="ml-2 font-mono text-[11px] text-[#65686D]">
-                  sckwellness.com/{s.urlPath}
+                  SCK Wellness / {s.urlPath || "home"}
                 </span>
               </div>
               <div className="flex items-center gap-2">

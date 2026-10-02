@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { siteConfig } from "@/lib/site-config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +24,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://gokulvenkat.dev"),
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: "Bonam Gokul Venkat | Backend Software Engineer",
     template: "%s | Bonam Gokul Venkat",
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://gokulvenkat.dev",
+    url: siteConfig.url,
     title: "Bonam Gokul Venkat | Backend Software Engineer",
     description:
       "Backend-focused Software Engineer experienced with Java, Spring Boot, PostgreSQL, REST APIs, Next.js and TypeScript. Explore production backend work, full-stack projects and AI research.",
@@ -60,6 +61,9 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: "/favicon.ico",
   },
 };
 

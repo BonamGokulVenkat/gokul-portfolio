@@ -38,7 +38,7 @@ export function RexSyncDiagram() {
             <p className="text-sm font-semibold text-white">External HR System</p>
           </div>
           <span className="text-[11px] text-[#DADCD8]/60 bg-white/10 px-2 py-1 rounded">
-            REST API Source
+            External data source
           </span>
         </div>
 
@@ -93,7 +93,7 @@ export function RexSyncDiagram() {
         <div className="p-5 rounded-xl border-2 border-[#3157D5] bg-[#1a233a]/80 space-y-3">
           <div className="flex items-center justify-between border-b border-[#3157D5]/30 pb-2">
             <span className="text-xs font-bold text-[#3157D5] uppercase tracking-wider">
-              05 · Process Staff Record (Transactional Entity Service)
+              05 · Process Staff Record
             </span>
             <span className="text-[10px] text-white/70 bg-[#3157D5]/30 px-2 py-0.5 rounded">
               @Transactional
@@ -169,7 +169,7 @@ export function RexSyncDiagram() {
             </p>
           </div>
           <span className="text-[11px] text-[#3157D5] bg-[#3157D5]/20 px-2 py-1 rounded font-semibold">
-            HTTP RestClient Payload
+            Completion signal
           </span>
         </div>
 

@@ -73,11 +73,11 @@ export function Hero() {
             </div>
 
             {/* Availability indicator */}
-            <div className="inline-flex items-center gap-2.5 rounded-md border border-[#DADCD8] bg-white px-3.5 py-1.5 shadow-2xs">
-              <span className="relative flex h-2.5 w-2.5">
+            <div className="flex max-w-full items-start gap-2.5 rounded-md border border-[#DADCD8] bg-white px-3.5 py-1.5 shadow-2xs">
+              <span className="relative mt-1 flex h-2.5 w-2.5 shrink-0">
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#18835B]"></span>
               </span>
-              <span className="font-mono text-xs sm:text-[13px] text-[#16181B] font-medium">
+              <span className="min-w-0 break-words font-mono text-xs sm:text-[13px] text-[#16181B] font-medium">
                 {siteConfig.availability}
               </span>
             </div>

@@ -6,22 +6,23 @@ import { RexSyncDiagram } from "@/components/case-study/rex-sync-diagram";
 import { NextProject } from "@/components/case-study/next-project";
 
 export const metadata: Metadata = {
-  title: "REX Backend Engineering Case Study | Gokul Venkat",
+  title: { absolute: "REX Backend Engineering Case Study | Gokul Venkat" },
   description:
     "A confidentiality-safe case study of my Java/Spring Boot backend contributions to REX, covering HR synchronization, workflow logic, validation, relational data, and system integration.",
   openGraph: {
     title: "REX Backend Engineering Case Study | Gokul Venkat",
     description:
-      "Production Java/Spring Boot backend engineering case study covering HR batch synchronization, receipt validation, event state transitions, and invoice responsibility delegation.",
+      "Production Java/Spring Boot backend engineering case study covering HR batch synchronization, receipt validation, event workflow changes, and invoice responsibility delegation.",
     type: "article",
-    url: "https://gokulvenkat.dev/work/rex",
+    url: "/work/rex",
   },
   twitter: {
     card: "summary_large_image",
     title: "REX Backend Engineering Case Study | Gokul Venkat",
     description:
-      "Production Java/Spring Boot backend engineering case study covering HR batch synchronization, receipt validation, event state transitions, and invoice responsibility delegation.",
+      "Production Java/Spring Boot backend engineering case study covering HR batch synchronization, receipt validation, event workflow changes, and invoice responsibility delegation.",
   },
+  alternates: { canonical: "/work/rex" },
 };
 
 export default function RexCaseStudyPage() {
@@ -42,7 +43,7 @@ export default function RexCaseStudyPage() {
       num: "03",
       title: "EVENT WORKFLOWS",
       summary:
-        "Added and modified event-management APIs and lifecycle behavior, including booking closure, participant handling, correction flows, and preservation of status history.",
+        "Implemented event-management workflow changes, including booking closure, participant handling, correction flows, and preservation of workflow history.",
     },
     {
       num: "04",
@@ -220,10 +221,10 @@ export default function RexCaseStudyPage() {
                   {[
                     "Scheduled HR batch synchronization pipeline",
                     "Receipt validation & ownership/deputy access controls",
-                    "Event lifecycle state machines & booking closure rules",
+                    "Event workflow changes & booking closure rules",
                     "Invoice responsibility delegation & active assignments",
-                    "Flyway schema migrations & repository projection queries",
-                    "Integration testing, Postman collections & Swagger documentation",
+                    "Data-change support for the contributed workflows",
+                    "Integration testing and implementation documentation",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2">
                       <span className="text-[#3157D5] select-none font-bold">✓</span>
@@ -426,7 +427,7 @@ export default function RexCaseStudyPage() {
                 Beyond synchronization
               </h2>
               <p className="text-base text-[#65686D] leading-relaxed">
-                Core enterprise features spanning financial receipt validation, event state machines, and invoice access delegation.
+                Core enterprise features spanning financial receipt validation, event workflow changes, and invoice responsibility delegation.
               </p>
             </div>
 
@@ -460,7 +461,7 @@ export default function RexCaseStudyPage() {
                 Lifecycle Operations &amp; History Preservation
               </h3>
               <p className="text-sm sm:text-base text-[#65686D] leading-relaxed">
-                Contributed to and modified event-management APIs governing team and corporate events, focusing on operational lifecycle rules. My work included implementing booking closure, participant removal, correction handling, and preserving status history across changes.
+                Contributed event-management workflow changes for team and corporate events, focusing on operational behavior. My work included booking closure, participant removal, correction handling, and preserving workflow history across changes.
               </p>
               {/* Behavior-oriented workflow diagram */}
               <div className="p-4 sm:p-5 rounded-lg bg-[#111418] text-white font-mono text-xs space-y-3">
@@ -489,7 +490,7 @@ export default function RexCaseStudyPage() {
                   </div>
                 </div>
                 <p className="text-[11px] text-[#DADCD8]/60 pt-1">
-                  Enforced historical state preservation and business constraints across participant adjustments and closure events.
+                  Preserved workflow history and applied business constraints across participant adjustments and closure events.
                 </p>
               </div>
             </div>
@@ -512,7 +513,7 @@ export default function RexCaseStudyPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#3157D5] font-bold">·</span>
-                  <span><strong>Lifecycle State Checks:</strong> Restricted delegation to invoices currently in actionable states, preventing assignment of already paid or canceled records.</span>
+                  <span><strong>Eligibility Checks:</strong> Restricted delegation to invoices that remained eligible for reassignment.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#3157D5] font-bold">·</span>

@@ -7,7 +7,7 @@ import { ModelComparisonTable } from "@/components/case-study/model-comparison-t
 import { NextProject } from "@/components/case-study/next-project";
 
 export const metadata: Metadata = {
-  title: "Agentic AI Intrusion Detection Research | Gokul Venkat",
+  title: { absolute: "Agentic AI Intrusion Detection Research | Gokul Venkat" },
   description:
     "Research case study on a deep-learning intrusion detection system using UNSW-NB15, multi-task binary and multiclass classification, and a risk-aware agentic decision engine for automated response.",
   openGraph: {
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description:
       "A deep-learning intrusion detection framework combining binary detection, multiclass classification, and an agentic risk decision engine on UNSW-NB15.",
     type: "article",
-    url: "https://gokulvenkat.dev/research/agentic-ids",
+    url: "/research/agentic-ids",
   },
   twitter: {
     card: "summary_large_image",
@@ -23,6 +23,7 @@ export const metadata: Metadata = {
     description:
       "Deep learning intrusion detection and automated threat response research presented at SCI-2026.",
   },
+  alternates: { canonical: "/research/agentic-ids" },
 };
 
 export default function AgenticIdsResearchPage() {

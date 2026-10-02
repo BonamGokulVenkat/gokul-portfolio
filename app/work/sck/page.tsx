@@ -6,7 +6,7 @@ import { SckArchitectureDiagram } from "@/components/case-study/sck-architecture
 import { SckScreenshotGallery } from "@/components/case-study/sck-screenshot-gallery";
 
 export const metadata: Metadata = {
-  title: "SCK Full-Stack Engineering Case Study | Gokul Venkat",
+  title: { absolute: "SCK Full-Stack Engineering Case Study | Gokul Venkat" },
   description:
     "A collaborative full-stack engineering case study covering SCK, including direct frontend contributions, booking workflow collaboration, PostgreSQL transactions, realtime updates, and architecture insights.",
   openGraph: {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description:
       "A collaborative full-stack engineering case study covering SCK, including direct frontend contributions, booking workflow collaboration, PostgreSQL transactions, realtime updates, and architecture insights.",
     type: "article",
-    url: "https://gokulvenkat.dev/work/sck",
+    url: "/work/sck",
   },
   twitter: {
     card: "summary_large_image",
@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     description:
       "Collaborative full-stack case study covering SCK: direct frontend work, booking workflow collaboration, PostgreSQL transactions, and architecture insights.",
   },
+  alternates: { canonical: "/work/sck" },
 };
 
 export default function SckCaseStudyPage() {

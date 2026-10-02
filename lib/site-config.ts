@@ -1,4 +1,5 @@
 export interface SiteConfig {
+  url: string;
   name: string;
   shortName: string;
   role: string;
@@ -27,12 +28,14 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
+  // Retains the site origin already configured in the application metadata.
+  url: "https://gokulvenkat.dev",
   name: "Bonam Gokul Venkat",
   shortName: "Gokul Venkat",
   role: "Backend Software Engineer",
   secondaryRole: "Backend-focused Full-Stack Engineer",
   status: "Open to entry-level Backend Software Engineer and backend-focused Full-Stack Engineer opportunities.",
-  location: "Bengaluru, Karnataka, India · Open to Relocation",
+  location: "Bengaluru, India · Open to relocation",
   phone: "+91 73820 27673",
   availability: "Open to entry-level backend and backend-focused full-stack roles.",
   tagline: "01 / BACKEND ENGINEERING",

@@ -45,7 +45,7 @@ function LinkedInIcon({ className = "w-4 h-4" }: { className?: string }) {
 
 function getSubpageTitle(path: string): string {
   if (path.includes("/work/luxora")) return "Luxora Estates";
-  if (path.includes("/work/rex")) return "REX Real Estate Exchange";
+  if (path.includes("/work/rex")) return "REX";
   if (path.includes("/work/sck")) return "SCK Wellness Platform";
   if (path.includes("/research/agentic-ids")) return "Agentic AI IDS";
   if (path.startsWith("/work")) return "Case Study";
@@ -280,7 +280,7 @@ export function Navbar() {
             {!isHome && (
               <Link
                 href={pathname.startsWith("/work") ? "/#work" : "/#research"}
-                className="inline-flex min-h-[38px] items-center gap-1 px-3 py-1.5 text-xs font-mono font-medium text-[#3157D5] bg-[#3157D5]/10 rounded border border-[#3157D5]/20 hover:bg-[#3157D5]/15 transition-colors"
+                className="inline-flex min-h-[44px] items-center gap-1 px-3 py-1.5 text-xs font-mono font-medium text-[#3157D5] bg-[#3157D5]/10 rounded border border-[#3157D5]/20 hover:bg-[#3157D5]/15 transition-colors"
               >
                 <span>←</span>
                 <span>{pathname.startsWith("/work") ? "Work" : "Home"}</span>

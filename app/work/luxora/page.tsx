@@ -10,7 +10,7 @@ import { ScreenshotGallery } from "@/components/case-study/luxora-screenshot-gal
 import { NextProject } from "@/components/case-study/next-project";
 
 export const metadata: Metadata = {
-  title: "Luxora Estates Full-Stack Engineering Case Study | Gokul Venkat",
+  title: { absolute: "Luxora Estates Full-Stack Engineering Case Study | Gokul Venkat" },
   description:
     "A full-stack engineering case study covering Luxora Estates, including conversational property search, PostgreSQL-backed retrieval, moderation workflows, authentication, structured pricing, subscriptions, and engineering trade-offs.",
   openGraph: {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description:
       "A full-stack engineering case study covering Luxora Estates, including conversational property search, PostgreSQL-backed retrieval, moderation workflows, authentication, structured pricing, and subscriptions.",
     type: "article",
-    url: "https://gokulvenkat.dev/work/luxora",
+    url: "/work/luxora",
   },
   twitter: {
     card: "summary_large_image",
@@ -26,6 +26,7 @@ export const metadata: Metadata = {
     description:
       "Full-stack marketplace engineering case study featuring natural-language constraint parsing, TypeORM/PostgreSQL retrieval, moderation workflows, and subscriptions.",
   },
+  alternates: { canonical: "/work/luxora" },
 };
 
 export default function LuxoraCaseStudyPage() {

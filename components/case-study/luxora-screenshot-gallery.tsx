@@ -80,7 +80,7 @@ export function ScreenshotGallery() {
                 <span className="w-2.5 h-2.5 rounded-full bg-[#DADCD8]" />
                 <span className="w-2.5 h-2.5 rounded-full bg-[#DADCD8]" />
                 <span className="ml-2 font-mono text-[11px] text-[#65686D]">
-                  luxora.app/{s.urlPath}
+                  Luxora Estates / {s.urlPath || "home"}
                 </span>
               </div>
               <span className="font-mono text-[10px] text-[#65686D] uppercase">
