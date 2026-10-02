@@ -97,10 +97,10 @@ export default function AgenticIdsResearchPage() {
 
             <div className="space-y-4 text-base sm:text-lg text-[#16181B] leading-relaxed">
               <p>
-                Traditional network intrusion detection systems have long depended on deterministic, signature-driven pattern matching. While signature matching reliably catches known malicious payloads with minimal computational overhead, it exhibits clear limitations when attack behavior mutates, when obfuscation techniques are applied, or when entirely novel exploits emerge.
+                Signature-based intrusion detection depends on known patterns and can be effective for previously identified threats, but it may become less effective when attack behavior changes or previously unseen patterns emerge.
               </p>
               <p className="text-sm sm:text-base text-[#65686D]">
-                Deep-learning models provide the capacity to learn non-linear traffic representations across high-dimensional flow statistics. However, in conventional security tooling, detection and classification are treated as passive alerts—leaving the operational response decision to human analysts or decoupled rule sets. This research explores unifying deep-learning flow detection, multiclass attack taxonomy, and an agentic risk-aware decision engine to select appropriate mitigations systematically.
+                Deep-learning models can learn complex patterns from high-dimensional network-flow features. Detection and classification alone, however, do not determine what operational action should follow. This research therefore combines deep-learning flow detection, multiclass attack classification, and a risk-aware decision layer that selects ALLOW, MONITOR, or BLOCK actions within the experimental framework.
               </p>
             </div>
 
@@ -110,7 +110,7 @@ export default function AgenticIdsResearchPage() {
                   Signature Limitations
                 </span>
                 <p className="text-xs sm:text-sm text-[#65686D] leading-relaxed">
-                  Rigid rule matching fails against polymorphism, evasion variants, and evolving zero-day payload distributions.
+                  Rule-based detection is tied to predefined patterns and can be less adaptable when attack behavior changes.
                 </p>
               </div>
               <div className="p-5 rounded-lg border border-[#DADCD8] bg-white space-y-2">
@@ -259,10 +259,10 @@ export default function AgenticIdsResearchPage() {
 
             <div className="space-y-4 text-base sm:text-lg text-[#16181B] leading-relaxed">
               <p>
-                Raw UNSW-NB15 flow data includes 42 descriptive features encompassing connection metrics, packet lengths, inter-arrival times, and TCP flags. To minimize parameter footprint, accelerate inference cycles, and diminish the influence of spurious correlation, we applied mutual-information (MI) ranking.
+                Raw UNSW-NB15 flow data includes 42 descriptive features spanning connection metrics, packet lengths, inter-arrival times, and protocol-related attributes. Mutual-information (MI) ranking was used to reduce the input feature set while retaining features with stronger relationships to the prediction targets.
               </p>
               <p className="text-sm sm:text-base text-[#65686D]">
-                Mutual information measures the mutual dependence between individual features and the target label without assuming linear relationships. Retaining the top 25 ranked features provided a 40.5% reduction in input dimensionality.
+                Mutual information measures dependence between individual features and the target label without assuming a purely linear relationship. The experimental pipeline retained the top 25 ranked features, reducing the model input from 42 features to 25.
               </p>
             </div>
 
@@ -273,7 +273,7 @@ export default function AgenticIdsResearchPage() {
                 <span>Empirical Nuance: Feature Selection vs. Raw Accuracy</span>
               </div>
               <p className="text-[#65686D] leading-relaxed">
-                Feature selection did not universally improve raw prediction accuracy. As documented in the experimental results, post-selection model accuracies were slightly lower across all four evaluated architectures than the initial models trained on all 42 features. The primary engineering benefit of mutual information was reducing model complexity and inference cost rather than maximizing benchmark scores.
+                Feature selection did not universally improve raw prediction accuracy. As documented in the experimental results, post-selection model accuracies were lower across all four evaluated architectures than the corresponding pre-selection results. Its clearest demonstrated effect in this experiment was reducing the model input from 42 features to 25 rather than maximizing benchmark accuracy.
               </p>
             </div>
           </div>
@@ -298,7 +298,7 @@ export default function AgenticIdsResearchPage() {
                 One representation, two prediction tasks
               </h2>
               <p className="text-base text-[#65686D] leading-relaxed">
-                Rather than training two isolated models, the framework trains a unified deep representation that branches into dual prediction heads:
+                The framework uses a shared representation that branches into two related prediction heads:
               </p>
             </div>
 
@@ -324,7 +324,7 @@ export default function AgenticIdsResearchPage() {
 
               <div className="space-y-3 text-xs sm:text-sm text-[#65686D] leading-relaxed">
                 <p>
-                  <strong className="text-[#16181B]">Architectural Rationale:</strong> Binary intrusion detection and attack-type classification share common underlying traffic signatures. Joint training regularizes the shared latent layers, forcing the model to learn representations that simultaneously distinguish benign traffic from attacks and discriminate between distinct threat behaviors.
+                  <strong className="text-[#16181B]">Architectural Rationale:</strong> Binary intrusion detection and attack-type classification are related tasks. A shared representation allows both prediction heads to learn from common network-flow features while producing separate binary and multiclass outputs.
                 </p>
                 <p>
                   <strong className="text-[#16181B]">Evaluated Model Families:</strong> Four distinct neural network architectures were evaluated on this multi-task objective: Multilayer Perceptron (MLP), 1D Convolutional Neural Network (CNN), Gated Recurrent Unit (GRU), and Long Short-Term Memory (LSTM). Internal layer counts, kernel configurations, and hidden units varied appropriately across the four families.
@@ -429,7 +429,7 @@ export default function AgenticIdsResearchPage() {
                   2. Temporal Severity
                 </span>
                 <p className="text-[#65686D] leading-relaxed">
-                  Incorporates historical threat records for the source host, weighted using an exponential decay factor (parameter <code className="font-mono">λ = 0.85</code>) to penalize repeat offenders.
+                  Incorporates historical severity using an exponential decay factor (parameter <code className="font-mono">λ = 0.85</code>) so that recent observations retain more influence than older ones.
                 </p>
               </div>
 
@@ -447,7 +447,7 @@ export default function AgenticIdsResearchPage() {
                   4. Criticality &amp; Uncertainty Modulation
                 </span>
                 <p className="text-[#65686D] leading-relaxed">
-                  Baseline risk is scaled up if the destination host is flagged as mission-critical infrastructure, and further adjusted when model prediction entropy indicates high uncertainty.
+                  Baseline risk is adjusted using system criticality and model uncertainty so that the decision layer can account for operational context in addition to prediction confidence.
                 </p>
               </div>
             </div>
@@ -534,7 +534,7 @@ export default function AgenticIdsResearchPage() {
             </div>
 
             <p className="text-xs text-[#65686D] leading-relaxed">
-              In security detection, <strong>false negatives</strong> (classifying an active intrusion as normal) carry catastrophic risk, whereas <strong>false positives</strong> (blocking benign traffic) degrade system availability. Evaluating Precision-Recall dynamics and confusion matrices was mandatory to assess operational viability.
+              In intrusion detection, <strong>false negatives</strong> can be especially consequential because malicious activity may be classified as normal, while <strong>false positives</strong> can unnecessarily disrupt legitimate traffic. Precision, recall, F1-score, ROC-AUC, Precision-Recall behavior, and confusion matrices therefore provide useful context beyond accuracy alone.
             </p>
           </div>
         </Container>
@@ -710,10 +710,10 @@ export default function AgenticIdsResearchPage() {
                 The MLP configuration performed strongly on this tabular benchmark, registering 96.6% accuracy and 0.9966 ROC-AUC following feature selection.
               </p>
               <p className="text-sm sm:text-base text-[#65686D]">
-                While recurrent architectures such as LSTM and GRU excel at raw sequential packet-stream modeling, network flow datasets summarize connections into static tabular aggregates (durations, byte sums, packet counters). In this representation, sequential gating mechanisms added computational overhead without improving classification over feedforward dense representations.
+                In this benchmark, the recurrent GRU and LSTM configurations did not outperform the MLP after feature selection. Because the experiment used tabular network-flow features, the additional sequence-model complexity did not provide an advantage in this particular setup.
               </p>
               <p className="text-sm sm:text-base text-[#65686D]">
-                Importantly, this does not establish that MLP is universally superior across all network intrusion detection scenarios. When traffic data preserves raw packet byte ordering or fine-grained inter-packet timing sequences, sequential or hybrid models may prove advantageous.
+                Importantly, this does not establish that MLP is universally superior across network intrusion detection tasks. The reported comparison applies to the UNSW-NB15 experimental setup and preprocessing used in this study.
               </p>
             </div>
           </div>
