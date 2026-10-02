@@ -46,7 +46,7 @@ function LinkedInIcon({ className = "w-4 h-4" }: { className?: string }) {
 function getSubpageTitle(path: string): string {
   if (path.includes("/work/luxora")) return "Luxora Estates";
   if (path.includes("/work/rex")) return "REX Real Estate Exchange";
-  if (path.includes("/work/sck")) return "Supply Chain Kernel";
+  if (path.includes("/work/sck")) return "SCK Wellness Platform";
   if (path.includes("/research/agentic-ids")) return "Agentic AI IDS";
   if (path.startsWith("/work")) return "Case Study";
   if (path.startsWith("/research")) return "Research";
@@ -61,7 +61,7 @@ export function Navbar() {
   const isHome = pathname === "/";
   const subpageTitle = getSubpageTitle(pathname);
 
-  // Close menu on route change during render (official React pattern avoiding effect cascading)
+  // Close menu on route change during render
   if (prevPathname !== pathname) {
     setPrevPathname(pathname);
     setMobileMenuOpen(false);
@@ -152,21 +152,24 @@ export function Navbar() {
     href: string
   ) => {
     const hash = href.includes("#") ? href.split("#")[1] : "";
+    setMobileMenuOpen(false);
+
     if (isHome && hash) {
       e.preventDefault();
-      const element = document.getElementById(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        window.history.pushState(null, "", `#${hash}`);
-        setHomeActiveSection(hash);
-      }
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          window.history.pushState(null, "", `#${hash}`);
+          setHomeActiveSection(hash);
+        }
+      }, 80);
     }
-    setMobileMenuOpen(false);
   };
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-[#DADCD8] bg-[#F7F7F3]/90 backdrop-blur-md transition-colors">
+      <header className="sticky top-0 z-50 w-full border-b border-[#DADCD8] bg-[#F7F7F3]/95 backdrop-blur-md transition-colors">
         <Container className="flex h-16 items-center justify-between gap-4">
           {/* Logo / Name & Breadcrumbs */}
           <div className="flex items-center gap-2.5 min-w-0">
@@ -191,16 +194,16 @@ export function Navbar() {
                   {pathname.startsWith("/work") ? "Work" : "Research"}
                 </Link>
                 <span className="text-[#DADCD8]">/</span>
-                <span className="text-[#16181B] font-medium truncate max-w-[200px] lg:max-w-[320px]">
+                <span className="text-[#16181B] font-medium truncate max-w-[180px] md:max-w-[260px] lg:max-w-[340px]">
                   {subpageTitle}
                 </span>
               </div>
             )}
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation (visible on lg and above: >= 1024px) */}
           <nav
-            className="hidden md:flex items-center gap-7 shrink-0"
+            className="hidden lg:flex items-center gap-7 shrink-0"
             aria-label="Main Navigation"
           >
             <div className="flex items-center gap-6 text-sm font-medium">
@@ -272,23 +275,23 @@ export function Navbar() {
             </div>
           </nav>
 
-          {/* Mobile Right Controls */}
-          <div className="md:hidden flex items-center gap-2 shrink-0">
+          {/* Mobile Right Controls (visible on screens < 1024px) */}
+          <div className="lg:hidden flex items-center gap-2 shrink-0">
             {!isHome && (
               <Link
                 href={pathname.startsWith("/work") ? "/#work" : "/#research"}
-                className="inline-flex min-h-[34px] items-center gap-1 px-2.5 py-1 text-xs font-mono font-medium text-[#3157D5] bg-[#3157D5]/10 rounded border border-[#3157D5]/20 hover:bg-[#3157D5]/15 transition-colors"
+                className="inline-flex min-h-[38px] items-center gap-1 px-3 py-1.5 text-xs font-mono font-medium text-[#3157D5] bg-[#3157D5]/10 rounded border border-[#3157D5]/20 hover:bg-[#3157D5]/15 transition-colors"
               >
                 <span>←</span>
                 <span>{pathname.startsWith("/work") ? "Work" : "Home"}</span>
               </Link>
             )}
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button with guaranteed touch target */}
             <button
               type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex h-10 w-10 items-center justify-center rounded-md text-[#16181B] hover:bg-[#DADCD8]/40 focus-visible:outline-2 focus-visible:outline-[#3157D5] transition-colors"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-[#16181B] hover:bg-[#DADCD8]/40 focus-visible:outline-2 focus-visible:outline-[#3157D5] transition-colors"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
@@ -321,85 +324,95 @@ export function Navbar() {
         </Container>
       </header>
 
-      {/* Mobile Drawer Menu (rendered outside header so position:fixed is relative to viewport) */}
+      {/* Mobile Drawer Menu (visible below lg: < 1024px) */}
       {mobileMenuOpen && (
-        <div
-          id="mobile-nav"
-          className="md:hidden fixed inset-x-0 top-16 bottom-0 z-50 bg-[#F7F7F3] border-t border-[#DADCD8] px-6 py-8 flex flex-col justify-between overflow-y-auto"
-        >
-          <nav className="flex flex-col space-y-4" aria-label="Mobile Navigation">
-            {siteConfig.navItems.map((item) => {
-              const hash = item.href.includes("#") ? item.href.split("#")[1] : "";
-              const isActive =
-                (isHome && hash && activeSection === hash) ||
-                (!isHome && pathname.startsWith("/work") && item.label === "Work") ||
-                (!isHome && pathname.startsWith("/research") && item.label === "Research");
+        <>
+          {/* Backdrop */}
+          <div
+            className="lg:hidden fixed inset-0 z-40 bg-black/20 backdrop-blur-xs transition-opacity"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
 
-              if (item.isExternal) {
+          {/* Drawer content */}
+          <div
+            id="mobile-nav"
+            className="lg:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-[#F7F7F3] border-t border-[#DADCD8] px-6 py-8 flex flex-col justify-between overflow-y-auto shadow-xl"
+          >
+            <nav className="flex flex-col space-y-4" aria-label="Mobile Navigation">
+              {siteConfig.navItems.map((item) => {
+                const hash = item.href.includes("#") ? item.href.split("#")[1] : "";
+                const isActive =
+                  (isHome && hash && activeSection === hash) ||
+                  (!isHome && pathname.startsWith("/work") && item.label === "Work") ||
+                  (!isHome && pathname.startsWith("/research") && item.label === "Research");
+
+                if (item.isExternal) {
+                  return (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between text-lg font-medium text-[#16181B] py-3 border-b border-[#DADCD8]/60 hover:text-[#3157D5] transition-colors"
+                    >
+                      <span>{item.label}</span>
+                      <span className="font-mono text-xs text-[#65686D]">EXT</span>
+                    </a>
+                  );
+                }
+
                 return (
-                  <a
+                  <Link
                     key={item.label}
                     href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between text-lg font-medium text-[#16181B] py-2 border-b border-[#DADCD8]/60 hover:text-[#3157D5] transition-colors"
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className={`flex items-center justify-between text-lg py-3 border-b border-[#DADCD8]/60 transition-colors ${
+                      isActive
+                        ? "text-[#3157D5] font-semibold"
+                        : "text-[#16181B] font-medium hover:text-[#3157D5]"
+                    }`}
                   >
-                    <span>{item.label}</span>
-                    <span className="font-mono text-xs text-[#65686D]">EXT</span>
-                  </a>
+                    <span className="flex items-center gap-2">
+                      {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#3157D5]" />}
+                      <span>{item.label}</span>
+                    </span>
+                    <span className="font-mono text-xs text-[#65686D]">
+                      {isActive ? "ACTIVE" : "SECTION"}
+                    </span>
+                  </Link>
                 );
-              }
+              })}
+            </nav>
 
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className={`flex items-center justify-between text-lg py-2 border-b border-[#DADCD8]/60 transition-colors ${
-                    isActive
-                      ? "text-[#3157D5] font-semibold"
-                      : "text-[#16181B] font-medium hover:text-[#3157D5]"
-                  }`}
+            <div className="pt-8 border-t border-[#DADCD8]">
+              <p className="font-mono text-xs uppercase tracking-wider text-[#65686D] mb-4">
+                Social Links
+              </p>
+              <div className="flex items-center gap-4">
+                <a
+                  href={siteConfig.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-[44px] items-center gap-2 rounded-md border border-[#DADCD8] bg-white px-4 py-2 text-sm font-medium text-[#16181B] hover:border-[#3157D5] transition-colors"
                 >
-                  <span className="flex items-center gap-2">
-                    {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#3157D5]" />}
-                    <span>{item.label}</span>
-                  </span>
-                  <span className="font-mono text-xs text-[#65686D]">
-                    {isActive ? "ACTIVE" : "SECTION"}
-                  </span>
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="pt-8 border-t border-[#DADCD8]">
-            <p className="font-mono text-xs uppercase tracking-wider text-[#65686D] mb-4">
-              Social Links
-            </p>
-            <div className="flex items-center gap-4">
-              <a
-                href={siteConfig.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-md border border-[#DADCD8] bg-white px-4 py-2 text-sm font-medium text-[#16181B] hover:border-[#3157D5] transition-colors"
-              >
-                <GithubIcon className="h-4 w-4" />
-                <span>GitHub</span>
-              </a>
-              <a
-                href={siteConfig.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-md border border-[#DADCD8] bg-white px-4 py-2 text-sm font-medium text-[#16181B] hover:border-[#3157D5] transition-colors"
-              >
-                <LinkedInIcon className="h-4 w-4" />
-                <span>LinkedIn</span>
-              </a>
+                  <GithubIcon className="h-4 w-4" />
+                  <span>GitHub</span>
+                </a>
+                <a
+                  href={siteConfig.links.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-[44px] items-center gap-2 rounded-md border border-[#DADCD8] bg-white px-4 py-2 text-sm font-medium text-[#16181B] hover:border-[#3157D5] transition-colors"
+                >
+                  <LinkedInIcon className="h-4 w-4" />
+                  <span>LinkedIn</span>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
