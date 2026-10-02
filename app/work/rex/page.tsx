@@ -454,30 +454,42 @@ export default function RexCaseStudyPage() {
             {/* Subsection B: Event lifecycle behavior */}
             <div className="p-6 sm:p-8 rounded-xl border border-[#DADCD8] bg-white space-y-4">
               <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#3157D5]">
-                B · EVENT LIFECYCLE BEHAVIOR
+                B · EVENT WORKFLOW &amp; LIFECYCLE BEHAVIOR
               </span>
               <h3 className="text-xl font-bold text-[#16181B]">
-                State Transitions &amp; Audit History
+                Lifecycle Operations &amp; History Preservation
               </h3>
               <p className="text-sm sm:text-base text-[#65686D] leading-relaxed">
-                Contributed and modified event-management APIs governing team and corporate events. Events progress through distinct lifecycle stages: draft planning, open booking, active attendance, closure, and expense reconciliation.
+                Contributed to and modified event-management APIs governing team and corporate events, focusing on operational lifecycle rules. My work included implementing booking closure, participant removal, correction handling, and preserving status history across changes.
               </p>
-              {/* Generic state-machine visual */}
-              <div className="p-4 rounded-lg bg-[#111418] text-white font-mono text-xs space-y-3">
+              {/* Behavior-oriented workflow diagram */}
+              <div className="p-4 sm:p-5 rounded-lg bg-[#111418] text-white font-mono text-xs space-y-3">
                 <span className="text-[11px] text-[#DADCD8]/60 uppercase tracking-wider block">
-                  GENERIC EVENT LIFECYCLE FLOW
+                  EVENT WORKFLOW OPERATIONS
                 </span>
-                <div className="flex flex-wrap items-center gap-2 text-[11px]">
-                  <span className="bg-white/10 px-2.5 py-1 rounded border border-white/20">Draft</span>
-                  <span className="text-white/40">→</span>
-                  <span className="bg-white/10 px-2.5 py-1 rounded border border-white/20">Open Booking</span>
-                  <span className="text-white/40">→</span>
-                  <span className="bg-white/10 px-2.5 py-1 rounded border border-white/20">Correction Flow</span>
-                  <span className="text-white/40">→</span>
-                  <span className="bg-[#18835B]/30 text-[#18835B] px-2.5 py-1 rounded border border-[#18835B]/50">Closed &amp; Reconciled</span>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:flex-wrap gap-2 text-[11px]">
+                  <div className="bg-white/10 px-3 py-2 rounded border border-white/20">
+                    Event lifecycle handling
+                  </div>
+                  <span className="hidden sm:inline text-white/40">→</span>
+                  <div className="bg-white/10 px-3 py-2 rounded border border-white/20">
+                    Participant / booking operations
+                  </div>
+                  <span className="hidden sm:inline text-white/40">→</span>
+                  <div className="bg-white/10 px-3 py-2 rounded border border-white/20">
+                    Correction handling
+                  </div>
+                  <span className="hidden sm:inline text-white/40">→</span>
+                  <div className="bg-white/10 px-3 py-2 rounded border border-white/20">
+                    Closure processing
+                  </div>
+                  <span className="hidden sm:inline text-white/40">→</span>
+                  <div className="bg-[#18835B]/30 text-[#18835B] px-3 py-2 rounded border border-[#18835B]/50 font-semibold">
+                    Status/history preservation
+                  </div>
                 </div>
                 <p className="text-[11px] text-[#DADCD8]/60 pt-1">
-                  Enforced historical logging on every status transition to maintain verifiable audit trails.
+                  Enforced historical state preservation and business constraints across participant adjustments and closure events.
                 </p>
               </div>
             </div>
