@@ -5,6 +5,7 @@ export interface SiteConfig {
   secondaryRole: string;
   status: string;
   location: string;
+  phone: string;
   availability: string;
   tagline: string;
   statement: string;
@@ -15,6 +16,7 @@ export interface SiteConfig {
     linkedin: string;
     leetcode: string;
     email: string;
+    phone: string;
     resume: string;
   };
   navItems: {
@@ -30,7 +32,8 @@ export const siteConfig: SiteConfig = {
   role: "Backend Software Engineer",
   secondaryRole: "Backend-focused Full-Stack Engineer",
   status: "Open to entry-level Backend Software Engineer and backend-focused Full-Stack Engineer opportunities.",
-  location: "Bengaluru, India · Open to relocation",
+  location: "Bengaluru, Karnataka, India · Open to Relocation",
+  phone: "+91 73820 27673",
   availability: "Open to entry-level backend and backend-focused full-stack roles.",
   tagline: "01 / BACKEND ENGINEERING",
   statement:
@@ -46,10 +49,11 @@ export const siteConfig: SiteConfig = {
     "Next.js",
   ],
   links: {
-    github: "https://github.com/bonamgokul",
-    linkedin: "https://linkedin.com/in/bonamgokul",
-    leetcode: "https://leetcode.com/bonamgokul",
-    email: "mailto:bonamgokul@example.com",
+    github: "https://github.com/BonamGokulVenkat",
+    linkedin: "https://linkedin.com/in/bonam-gokul-venkat/",
+    leetcode: "https://leetcode.com/u/Gokul_Venkat1",
+    email: "mailto:bonamgokul@gmail.com",
+    phone: "tel:+917382027673",
     resume: "/resume.pdf",
   },
   navItems: [
