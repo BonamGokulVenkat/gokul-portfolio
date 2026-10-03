@@ -29,8 +29,8 @@ export function SearchPipelineDiagram() {
           { step: "04", title: "Session Context Merge", desc: "Blend active user turn with prior conversational filters" },
           { step: "05", title: "Required vs Preferred Split", desc: "Separate hard constraints from soft preference factors" },
           { step: "06", title: "Parameterized PostgreSQL Query", desc: "TypeORM parameterized execution against available listings" },
-          { step: "07", title: "Preference Scoring & Rehydration", desc: "Deterministic weighted rank on verified canonical records" },
-          { step: "08", title: "Emit UI Property Cards", desc: "Structured property cards with verified prices and media" },
+          { step: "07", title: "Preference Scoring & Rehydration", desc: "Deterministic weighted rank on canonical database records" },
+          { step: "08", title: "Emit UI Property Cards", desc: "Structured property cards with stored prices and media" },
           { step: "09", title: "Guarded LLM Narrative Response", desc: "LLM synthesizes response bound strictly to returned records" },
         ].map((item, idx) => (
           <React.Fragment key={item.step}>
@@ -122,7 +122,7 @@ export function ModerationWorkflowDiagram() {
           </div>
           <div className="space-y-1.5 text-[11px]">
             <div className="p-1.5 rounded bg-white border border-[#DADCD8] text-red-600">
-              ├─ Approve → Soft Delete
+              ├─ Approve → Delete property record
             </div>
             <div className="p-1.5 rounded bg-white border border-[#DADCD8] text-[#18835B]">
               └─ Reject → AVAILABLE

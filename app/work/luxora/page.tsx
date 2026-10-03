@@ -35,7 +35,7 @@ export default function LuxoraCaseStudyPage() {
       role: "BUYERS / INDIVIDUALS",
       points: [
         "Browse and search multi-tier property listings",
-        "Save favorite properties and track updates",
+        "Save favorite properties",
         "Inspect builder profiles and published portfolio information",
         "Engage with the conversational property advisor",
       ],
@@ -44,7 +44,7 @@ export default function LuxoraCaseStudyPage() {
       role: "BUILDERS",
       points: [
         "Create and manage residential/commercial listing submissions",
-        "Manage owned inventory and property inquiries",
+        "Manage owned listings and moderation requests",
         "Request property edits and deletions via review queues",
         "Operate within active plan listing quotas",
       ],
@@ -96,7 +96,7 @@ export default function LuxoraCaseStudyPage() {
   const lessons = [
     {
       title: "Structured Data Before Generation",
-      body: "Property recommendations should remain grounded in canonical database records. Natural language is most useful for interpreting intent and presenting verified listing facts clearly.",
+      body: "Property recommendations should remain grounded in canonical database records. Natural language is most useful for interpreting intent and presenting stored listing facts clearly.",
     },
     {
       title: "Authorization Is Domain Logic",
@@ -226,7 +226,7 @@ export default function LuxoraCaseStudyPage() {
                 Where I contributed
               </h2>
               <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                Contributed substantially to a team-built real-estate marketplace across frontend, backend, moderation, authentication, pricing, subscriptions, payments, and conversational property search.
+                Contributed to a team-built real-estate marketplace across frontend, backend, moderation, authentication, pricing, subscriptions, payment integration, and conversational property search.
               </p>
             </div>
 
@@ -468,7 +468,7 @@ export default function LuxoraCaseStudyPage() {
                 The platform implements JWT access and refresh token cycles alongside Google and LinkedIn OAuth handlers. However, authentication verifies identity; authorization determines permissible business actions.
               </p>
               <p className="text-[#65686D]">
-                Roles (<code>INDIVIDUAL</code>, <code>BUILDER</code>, <code>ADMIN</code>) are validated at the backend route level via NestJS guards. Crucially, UI visibility is not an access control boundary—ownership checks verify that a builder can only update or request changes on their own properties.
+                Backend guards and ownership checks protect several administrative and owner-restricted actions. UI visibility alone does not enforce access; ownership checks restrict changes to a builder&apos;s own properties.
               </p>
             </div>
           </div>
@@ -496,25 +496,28 @@ export default function LuxoraCaseStudyPage() {
 
             <div className="p-6 rounded-xl border border-[#DADCD8] bg-white space-y-4 font-mono text-xs">
               <span className="text-[11px] text-[#65686D] uppercase tracking-wider block">
-                Razorpay Checkout Lifecycle
+                Subscription &amp; Payment Integration Components
               </span>
               <div className="space-y-2 text-[#16181B]">
                 <div className="p-2.5 rounded bg-[#F7F7F3] border border-[#DADCD8]">
-                  1. Builder selects subscription plan (e.g. 20 property listings limit)
+                  Subscription plans and listing entitlement fields
                 </div>
                 <div className="p-2.5 rounded bg-[#F7F7F3] border border-[#DADCD8]">
-                  2. Backend creates Razorpay order with corresponding amount &amp; currency
+                  Backend Razorpay order creation with plan amount and currency
                 </div>
                 <div className="p-2.5 rounded bg-[#F7F7F3] border border-[#DADCD8]">
-                  3. Client executes checkout modal and receives payment signature
+                  Client Razorpay Checkout integration
                 </div>
                 <div className="p-2.5 rounded bg-[#F7F7F3] border border-[#DADCD8]">
-                  4. Backend validates HMAC-SHA256 signature using secret key
+                  Backend HMAC-SHA256 signature verification code path
                 </div>
                 <div className="p-2.5 rounded bg-[#3157D5]/10 border border-[#3157D5] text-[#3157D5] font-semibold">
-                  5. Updates builder subscription tier and expands property posting quota
+                  Listing limit behavior using subscription entitlement fields
                 </div>
               </div>
+              <p className="text-[11px] text-[#65686D] leading-relaxed">
+                These components do not establish a complete, production-safe payment and entitlement lifecycle.
+              </p>
             </div>
           </div>
         </Container>
@@ -529,7 +532,7 @@ export default function LuxoraCaseStudyPage() {
           <div className="max-w-4xl space-y-8">
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                11 / RETROSPECTIVE
+                10 / RETROSPECTIVE
               </span>
               <h2
                 id="lessons-heading"
@@ -568,7 +571,7 @@ export default function LuxoraCaseStudyPage() {
           <div className="max-w-4xl space-y-8">
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                12 / TECH STACK
+                11 / TECH STACK
               </span>
               <h2
                 id="tech-heading"
@@ -611,7 +614,7 @@ export default function LuxoraCaseStudyPage() {
           <div className="max-w-4xl space-y-8">
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-wider text-[#65686D]">
-                14 / INTERFACES &amp; FLOWS
+                12 / INTERFACES &amp; FLOWS
               </span>
               <h2
                 id="screenshots-heading"

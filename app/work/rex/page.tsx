@@ -56,7 +56,7 @@ export default function RexCaseStudyPage() {
   const failurePrinciples = [
     {
       title: "BATCHING",
-      body: "Processing data in bounded groups keeps the synchronization workflow manageable and makes individual failures easier to isolate without overloading database connections or memory.",
+      body: "Processing data in bounded groups keeps the synchronization workflow manageable and makes per-record outcomes easier to isolate.",
     },
     {
       title: "PARTIAL FAILURES",
@@ -72,7 +72,7 @@ export default function RexCaseStudyPage() {
     },
     {
       title: "ORGANIZATION HISTORY",
-      body: "Organizational information is versioned rather than blindly overwritten, allowing active/current data to be distinguished from previous records for auditing and retrospective reporting.",
+      body: "Organizational information is versioned rather than blindly overwritten, preserving previous organizational records and distinguishing current data from historical data.",
     },
     {
       title: "TRANSACTION BOUNDARIES",
@@ -318,7 +318,7 @@ export default function RexCaseStudyPage() {
                   "6. Create / update application user when roles require it",
                   "7. Version organizational records to preserve history",
                   "8. Validate incoming role mappings against local permissions",
-                  "9. Collect verified successful record identifiers",
+                  "9. Collect successfully processed record identifiers",
                   "10. Transmit completion acknowledgement to external HR system",
                 ].map((step) => (
                   <div

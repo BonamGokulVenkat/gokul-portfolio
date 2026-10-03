@@ -446,7 +446,7 @@ export default function SckCaseStudyPage() {
 
             <div className="space-y-4 text-sm sm:text-base text-[#65686D] leading-relaxed">
               <p>
-                In a three-person team, feature delivery rarely occurs in strict isolation. While teammates established the foundational Drizzle schemas and API controllers, I participated actively in verifying that the multi-step booking funnel operated reliably from the user’s perspective.
+                In a three-person team, feature delivery rarely occurs in strict isolation. While teammates established the foundational Drizzle schemas and API controllers, I participated in testing the multi-step booking funnel from the user’s perspective.
               </p>
               <p>
                 This collaborative work focused on helping connect the booking journey end to end, debugging integration issues, testing user flows, and supporting teammates as booking-related features were completed.
@@ -520,7 +520,7 @@ export default function SckCaseStudyPage() {
                 Helping deliver the booking experience
               </h2>
               <p className="text-base sm:text-lg text-[#65686D] leading-relaxed">
-                The booking journey takes users from initial program selection through dynamic intake questionnaires and slot reservation to post-submission status tracking and admin schedule management.
+                The booking journey takes users from initial program selection through dynamic intake questionnaires and slot selection to post-submission status tracking and admin schedule management.
               </p>
             </div>
 
@@ -595,14 +595,14 @@ export default function SckCaseStudyPage() {
                 {/* Step 8 */}
                 <div className="p-3 rounded bg-white border border-[#DADCD8] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
                   <span className="font-semibold text-[#16181B]">8. Notification Trigger</span>
-                  <span className="text-[#65686D]">Dispatch WhatsApp alert / confirmation message</span>
+                  <span className="text-[#65686D]">Dispatch pending acknowledgement / booking-status notification</span>
                 </div>
                 <div className="text-center text-[#65686D] select-none text-xs">↓</div>
 
                 {/* Step 9 */}
                 <div className="p-3 rounded bg-emerald-50 border border-emerald-300 text-emerald-900 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                  <span className="font-semibold">9. Confirmation &amp; User View</span>
-                  <span className="text-emerald-700">Display confirmation details &amp; update user dashboard</span>
+                  <span className="font-semibold">9. Submission Acknowledgement &amp; User View</span>
+                  <span className="text-emerald-700">Display submission details &amp; update user dashboard</span>
                 </div>
               </div>
             </div>
@@ -761,7 +761,7 @@ export default function SckCaseStudyPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#3157D5] font-bold">·</span>
-                    <span>Review booking submissions, confirm payments, &amp; process cancellations</span>
+                    <span>Review booking submissions and uploaded payment receipts, &amp; process cancellations</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[#3157D5] font-bold">·</span>

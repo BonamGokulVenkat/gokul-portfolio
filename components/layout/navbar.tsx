@@ -57,15 +57,14 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [homeActiveSection, setHomeActiveSection] = useState<string>("");
   const pathname = usePathname();
-  const [prevPathname, setPrevPathname] = useState(pathname);
   const isHome = pathname === "/";
   const subpageTitle = getSubpageTitle(pathname);
 
-  // Close menu on route change during render
-  if (prevPathname !== pathname) {
-    setPrevPathname(pathname);
-    setMobileMenuOpen(false);
-  }
+  // Close the mobile menu after navigation.
+  useEffect(() => {
+    const timer = window.setTimeout(() => setMobileMenuOpen(false), 0);
+    return () => window.clearTimeout(timer);
+  }, [pathname]);
 
   // Derive active section directly for subpages without needing setState
   const activeSection = isHome

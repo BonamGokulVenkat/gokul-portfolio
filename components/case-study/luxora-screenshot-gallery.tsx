@@ -23,7 +23,7 @@ export function ScreenshotGallery() {
       urlPath: "marketplace",
       title: "Marketplace discovery experience",
       caption:
-        "Public luxury property discovery featuring tiered regional search, multi-currency support, and verified listing collections.",
+        "Public luxury property discovery featuring tiered regional search, multi-currency support, and available listing collections.",
       alt: "Luxora Estates marketplace homepage showcasing luxury villa hero banner, country, city, and property-type search filters, and curated listings.",
       image: marketplaceImg,
     },
@@ -32,7 +32,7 @@ export function ScreenshotGallery() {
       urlPath: "advisor",
       title: "Conversational property search",
       caption:
-        "Interactive Luxora AI conversational assistant translating natural-language buyer preferences into verified property recommendations.",
+        "Interactive Luxora AI conversational assistant translating natural-language buyer preferences into database-grounded property recommendations.",
       alt: "Luxora AI conversational property advisor slideout interface displaying ready status and prompt suggestions over featured properties.",
       image: advisorImg,
     },

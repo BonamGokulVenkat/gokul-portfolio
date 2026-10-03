@@ -28,8 +28,7 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  // Retains the site origin already configured in the application metadata.
-  url: "https://gokulvenkat.dev",
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, ""),
   name: "Bonam Gokul Venkat",
   shortName: "Gokul Venkat",
   role: "Backend Software Engineer",
@@ -42,7 +41,7 @@ export const siteConfig: SiteConfig = {
   statement:
     "I build backend systems where data integrity, business rules, integrations, and real-world workflows matter.",
   summary:
-    "2026 AI & Data Science graduate with hands-on experience contributing to production Java/Spring Boot systems and building full-stack products with PostgreSQL, TypeScript, Next.js, and NestJS.",
+    "2026 AI & Data Science graduate with ongoing Software Engineering Internship experience contributing to production Java/Spring Boot backend systems.",
   techStack: [
     "Java",
     "Spring Boot",
@@ -53,8 +52,8 @@ export const siteConfig: SiteConfig = {
   ],
   links: {
     github: "https://github.com/BonamGokulVenkat",
-    linkedin: "https://linkedin.com/in/bonam-gokul-venkat/",
-    leetcode: "https://leetcode.com/u/Gokul_Venkat1",
+    linkedin: "https://www.linkedin.com/in/bonam-gokul-venkat/",
+    leetcode: "https://leetcode.com/u/Gokul_Venkat1/",
     email: "mailto:bonamgokul@gmail.com",
     phone: "tel:+917382027673",
     resume: "/resume.pdf",

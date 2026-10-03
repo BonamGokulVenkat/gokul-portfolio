@@ -187,7 +187,7 @@ export function SelectedWork() {
                 </p>
 
                 <div className="text-xs font-mono text-[#65686D] bg-[#F7F7F3] p-2.5 rounded border border-[#DADCD8]">
-                  Presented at SCI-2026, Swinburne Vietnam, Hanoi · Publication forthcoming
+                  Presented at SCI-2026, Swinburne Vietnam, Hanoi · Accepted for publication
                 </div>
 
                 <div className="pt-2">

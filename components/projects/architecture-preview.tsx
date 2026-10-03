@@ -7,7 +7,7 @@ export function RexArchitecturePreview() {
     { id: "03", label: "Batch Processing", note: "Paged processing" },
     { id: "04", label: "Validation & Roles", note: "Rules & mapping" },
     { id: "05", label: "PostgreSQL", note: "Transactional write" },
-    { id: "06", label: "Acknowledgement", note: "Audit logging" },
+    { id: "06", label: "Acknowledgement", note: "Successful records" },
   ];
 
   return (
@@ -60,7 +60,7 @@ export function ResearchArchitecturePreview() {
     { label: "UNSW-NB15", sub: "Raw Network Flows" },
     { label: "Preprocessing", sub: "Scaling & Encoding" },
     { label: "Feature Selection", sub: "Mutual Information" },
-    { label: "Shared Representation", sub: "Deep Feature Space" },
+    { label: "Model Evaluation", sub: "MLP / CNN / GRU / LSTM" },
     { label: "Dual Classification", sub: "Binary + Multiclass" },
     { label: "Agentic Decision Engine", sub: "Confidence & Risk Rules" },
     { label: "Action Response", sub: "ALLOW / MONITOR / BLOCK" },

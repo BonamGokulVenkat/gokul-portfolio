@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | Bonam Gokul Venkat",
   },
   description:
-    "Backend-focused Software Engineer experienced with Java, Spring Boot, PostgreSQL, REST APIs, Next.js and TypeScript. Explore production backend work, full-stack projects and AI research.",
+    "2026 AI & Data Science graduate and Software Engineering Intern contributing to production Java/Spring Boot backend systems. Explore backend work, team projects and AI research.",
   keywords: [
     "Backend Engineer",
     "Java",
@@ -43,20 +43,21 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Bonam Gokul Venkat" }],
   creator: "Bonam Gokul Venkat",
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
     title: "Bonam Gokul Venkat | Backend Software Engineer",
     description:
-      "Backend-focused Software Engineer experienced with Java, Spring Boot, PostgreSQL, REST APIs, Next.js and TypeScript. Explore production backend work, full-stack projects and AI research.",
+      "2026 AI & Data Science graduate and Software Engineering Intern contributing to production Java/Spring Boot backend systems. Explore backend work, team projects and AI research.",
     siteName: "Bonam Gokul Venkat Portfolio",
   },
   twitter: {
     card: "summary_large_image",
     title: "Bonam Gokul Venkat | Backend Software Engineer",
     description:
-      "Backend-focused Software Engineer experienced with Java, Spring Boot, PostgreSQL, REST APIs, Next.js and TypeScript.",
+      "2026 AI & Data Science graduate and Software Engineering Intern contributing to production Java/Spring Boot backend systems.",
   },
   robots: {
     index: true,

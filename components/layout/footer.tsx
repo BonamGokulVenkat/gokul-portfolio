@@ -55,7 +55,7 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-8 text-xs text-[#65686D]">
           <p>Built with Next.js & TypeScript.</p>
           <p className="font-mono text-[11px] text-[#65686D]/80">
-            Clean Architecture · Technical Editorial Design
+            Designed &amp; built by Gokul Venkat
           </p>
         </div>
       </Container>

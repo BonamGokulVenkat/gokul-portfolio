@@ -39,7 +39,7 @@ export function SckArchitectureDiagram() {
               <p className="text-sm font-semibold text-white">React Client Components & Interactive Surfaces</p>
             </div>
             <div className="flex flex-wrap gap-1.5 text-[11px] text-[#DADCD8]/80">
-              <span className="bg-white/10 px-2 py-0.5 rounded">React 18</span>
+              <span className="bg-white/10 px-2 py-0.5 rounded">React</span>
               <span className="bg-white/10 px-2 py-0.5 rounded">TypeScript</span>
               <span className="bg-white/10 px-2 py-0.5 rounded">Tailwind CSS</span>
               <span className="bg-white/10 px-2 py-0.5 rounded">Framer Motion</span>
@@ -63,7 +63,7 @@ export function SckArchitectureDiagram() {
 
         {/* Direction Arrow */}
         <div className="flex justify-center text-white/40 text-xs select-none">
-          ↓ HTTP Fetch / Server Actions / NextAuth JWT Bearer
+          ↓ HTTP Fetch / Server Actions / NextAuth session / authenticated requests
         </div>
 
         {/* Tier 2: Next.js Server Core */}
@@ -85,7 +85,7 @@ export function SckArchitectureDiagram() {
               </p>
             </div>
             <div className="p-3 rounded bg-black/40 border border-white/10 space-y-1">
-              <span className="text-white font-semibold block">Booking Controller</span>
+              <span className="text-white font-semibold block">Booking Route Handlers</span>
               <p className="text-[10px] text-[#DADCD8]/60">
                 Core payload validation, slot status lookups, draft reconciliation, cancellation handler
               </p>
@@ -157,11 +157,11 @@ export function SckArchitectureDiagram() {
             </div>
             <div className="p-2.5 rounded bg-black/40 border border-white/10">
               <span className="text-amber-200 font-medium block">WhatsApp Gateway</span>
-              <p className="text-[10px] text-[#DADCD8]/60 mt-0.5">Best-effort OTP verification, inquiry pings, and booking confirmation alerts</p>
+              <p className="text-[10px] text-[#DADCD8]/60 mt-0.5">Best-effort OTP verification, inquiry pings, and booking status notifications</p>
             </div>
             <div className="p-2.5 rounded bg-black/40 border border-white/10">
               <span className="text-amber-200 font-medium block">Nodemailer (SMTP)</span>
-              <p className="text-[10px] text-[#DADCD8]/60 mt-0.5">Email-based password reset tokens and administrative transaction alerts</p>
+              <p className="text-[10px] text-[#DADCD8]/60 mt-0.5">Email-based password recovery and reset behavior</p>
             </div>
           </div>
         </div>

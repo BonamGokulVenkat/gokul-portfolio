@@ -4,10 +4,10 @@ export function ResearchArchitectureDiagram() {
   return (
     <div
       className="p-6 sm:p-8 rounded-xl border border-[#DADCD8] bg-white shadow-2xs font-mono text-xs"
-      aria-label="Research System Architecture: from raw UNSW-NB15 flow data through preprocessing, mutual-information feature selection, multi-task deep representation, and agentic decision engine to automated response actions."
+      aria-label="Research System Architecture: from raw UNSW-NB15 flow data through preprocessing, mutual-information feature selection, binary and multiclass prediction, and agentic decision engine to automated response actions."
     >
       <div className="sr-only">
-        System Architecture flow description: The pipeline ingests UNSW-NB15 network flow data, performs numeric encoding, Z-score normalization, and stratified splitting. Next, mutual-information feature selection extracts the top 25 features. These are passed to a shared deep-learning feature representation that branches into two heads: binary detection (normal vs attack) and multiclass classification (attack categories). Their joint prediction confidence and severity vectors feed into the agentic decision engine, which fuses instantaneous severity, temporal severity, system criticality, and uncertainty to select an ALLOW, MONITOR, or BLOCK action, concluding with decision logging and alerting.
+        System Architecture flow description: The pipeline ingests UNSW-NB15 network flow data, performs numeric encoding, Z-score normalization, and stratified splitting. Next, mutual-information feature selection extracts the top 25 features. The evaluated models produce binary detection (normal vs attack) and multiclass classification (attack categories). Their predictions feed into the agentic decision engine, which combines instantaneous severity, temporal severity, system criticality, and uncertainty to select an ALLOW, MONITOR, or BLOCK action, concluding with decision logging and administrator alerting.
       </div>
 
       <div className="flex flex-col items-center space-y-3 sm:space-y-4 max-w-2xl mx-auto">
@@ -52,7 +52,7 @@ export function ResearchArchitectureDiagram() {
             Mutual-Information Feature Selection
           </p>
           <p className="text-[11px] text-[#65686D] mt-0.5 font-sans">
-            Top 25 highest information-gain features retained to mitigate overfitting
+            Top 25 ranked features retained from 42 inputs
           </p>
         </div>
 
@@ -68,7 +68,7 @@ export function ResearchArchitectureDiagram() {
             Shared Feature Representation
           </p>
           <p className="text-[11px] text-[#DADCD8] mt-0.5 font-sans">
-            Multi-task dense latent space learned across evaluation backbones (MLP, CNN, GRU, LSTM)
+            Evaluated model families: MLP, CNN, GRU, LSTM
           </p>
         </div>
 
@@ -113,7 +113,7 @@ export function ResearchArchitectureDiagram() {
             Prediction Confidence &amp; Instantaneous Severity Vector
           </p>
           <p className="text-[11px] text-[#65686D] mt-0.5 font-sans">
-            Entropy-derived uncertainty · Maximum attack class probability
+            Model uncertainty · Attack class probabilities
           </p>
         </div>
 
@@ -161,7 +161,7 @@ export function ResearchArchitectureDiagram() {
             07 / AUDIT &amp; OBSERVABILITY
           </span>
           <p className="font-semibold text-[#16181B] text-xs mt-0.5">
-            Decision Logging, Telemetry &amp; Operator Alerting
+            Decision Logging &amp; Administrator Alerting
           </p>
         </div>
       </div>

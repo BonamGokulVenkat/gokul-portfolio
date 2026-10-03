@@ -13,7 +13,7 @@ export function ModelComparisonTable() {
   const models: ModelRecord[] = [
     {
       model: "Multilayer Perceptron (MLP)",
-      type: "Feedforward Dense Network",
+      type: "MLP",
       preAccuracy: 97.1,
       postAccuracy: 96.6,
       diff: -0.5,
@@ -21,7 +21,7 @@ export function ModelComparisonTable() {
     },
     {
       model: "Convolutional Neural Network (CNN)",
-      type: "1D Temporal Convolutional",
+      type: "CNN",
       preAccuracy: 96.6,
       postAccuracy: 94.6,
       diff: -2.0,
@@ -29,7 +29,7 @@ export function ModelComparisonTable() {
     },
     {
       model: "Long Short-Term Memory (LSTM)",
-      type: "Recurrent Gated Sequence",
+      type: "LSTM",
       preAccuracy: 97.0,
       postAccuracy: 90.2,
       diff: -6.8,
@@ -37,7 +37,7 @@ export function ModelComparisonTable() {
     },
     {
       model: "Gated Recurrent Unit (GRU)",
-      type: "Lightweight Recurrent Sequence",
+      type: "GRU",
       preAccuracy: 96.9,
       postAccuracy: 89.8,
       diff: -7.1,
@@ -98,7 +98,7 @@ export function ModelComparisonTable() {
           Experimental Takeaway on Dimensionality Reduction:
         </p>
         <p>
-          Mutual information reduced feature dimensions by 40.5% (retaining 25 of 42 features) to reduce model complexity and computational overhead. However, empirical accuracy marginally declined across all four architectures (most notably on recurrent networks like GRU and LSTM). This illustrates that feature selection provides compactness and training efficiency rather than an automatic boost to raw benchmark accuracy.
+          Mutual information reduced the input from 42 features to the top 25 ranked features. Post-selection accuracy decreased across all four evaluated architectures; the table reports the measured accuracy shifts without claiming a computational improvement.
         </p>
       </div>
     </div>

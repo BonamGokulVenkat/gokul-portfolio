@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bonam Gokul Venkat — Portfolio
 
-## Getting Started
+Personal portfolio for backend engineering work, team-built applications, and AI research. Gokul is a 2026 B.Tech AI & Data Science graduate and a Software Engineering Intern at Saptarishi Solutions (Dec 2025–present), contributing to Java/Spring Boot backend systems. The portfolio targets entry-level Backend Software Engineer and backend-focused full-stack roles.
 
-First, run the development server:
+## Stack and routes
+
+Built with Next.js, React, TypeScript, and Tailwind CSS.
+
+- `/` — profile, experience, selected work, research, and contact links
+- `/work/rex` — production employee-expense backend contributions
+- `/work/luxora` — team-built real-estate marketplace case study
+- `/research/agentic-ids` — UNSW-NB15 intrusion detection research
+- `/work/sck` — team-built wellness platform case study
+- `/resume.pdf` — downloadable resume asset
+
+## Local development
+
+Use a supported Node.js version for the installed Next.js release, then:
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`. For a production check, run `npx tsc --noEmit`, `npx eslint .`, and `npm run build`; `npm run start` serves the build.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment and site URL
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Set `NEXT_PUBLIC_SITE_URL` to the actual public origin of the deployment, for example `https://your-deployment.example` (no path). The value supplies `metadataBase`, canonical and Open Graph URLs, `sitemap.xml`, and the sitemap reference in `robots.txt`. Without it, these URLs use `http://localhost:3000` for local development. Set the variable in the hosting provider before the production build; replace it if the public origin changes. No custom domain is assumed.
 
-## Learn More
+## Content and accessibility
 
-To learn more about Next.js, take a look at the following resources:
+REX is a proprietary, team-maintained system. Its case study describes permitted contributions and uses a non-confidential architecture illustration; it does not publish internal code or records. Other case studies distinguish direct work from team ownership. Research metrics describe benchmark evaluation, not live security performance. Keep future edits grounded in the underlying project or paper and avoid treating stored product content as independently verified facts.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The site includes semantic headings and landmarks, descriptive image text, visible keyboard focus, and mobile navigation with Escape handling. Review these behaviors and horizontal overflow at mobile widths before release.

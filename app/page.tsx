@@ -28,7 +28,7 @@ export default function Home() {
             "@type": "Person",
             name: siteConfig.name,
             url: siteConfig.url,
-            jobTitle: siteConfig.role,
+            jobTitle: "Software Engineering Intern",
             address: {
               "@type": "PostalAddress",
               addressLocality: "Bengaluru",

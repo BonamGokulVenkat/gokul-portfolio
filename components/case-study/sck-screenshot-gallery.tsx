@@ -62,7 +62,7 @@ export function SckScreenshotGallery() {
       urlPath: "#testimonials",
       title: "Testimonials presentation & carousel UI",
       caption:
-        "Direct frontend contribution: Responsive testimonials carousel UI designed for verified participant reflections without exaggerated metrics.",
+        "Direct frontend contribution: Responsive testimonials carousel UI presenting participant testimonials.",
       alt: "SCK testimonials section showcasing interactive review cards with participant reflections and pagination indicators.",
       badge: "Direct Contribution",
       image: testimonialsImg,
@@ -72,7 +72,7 @@ export function SckScreenshotGallery() {
       urlPath: "about",
       title: "Practitioner background & credentials",
       caption:
-        "Practitioner profile providing certified therapy credentials, lineage context, and holistic methodology explanations.",
+        "Practitioner profile presenting background and credentials shown on the site, lineage context, and holistic methodology explanations.",
       alt: "SCK about section detailing practitioner biography, therapeutic experience, and community service background.",
       image: aboutImg,
     },

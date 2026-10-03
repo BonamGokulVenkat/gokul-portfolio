@@ -89,12 +89,12 @@ export function ResearchSection() {
             </div>
           </div>
 
-          {/* Metadata & Forthcoming badge */}
+          {/* Presentation and publication status */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-[#DADCD8] text-xs font-mono text-[#65686D]">
             <div>
               <p>Presented at SCI-2026, Swinburne Vietnam, Hanoi</p>
               <p className="text-[#18835B] font-semibold mt-0.5">
-                Status: Publication forthcoming
+                Status: Accepted for publication
               </p>
             </div>
 

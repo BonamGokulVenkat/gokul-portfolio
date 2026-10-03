@@ -83,7 +83,7 @@ export function DecisionEngineDiagram() {
               Asset Priority Scaling
             </p>
             <p className="text-[11px] text-[#65686D] font-sans mt-0.5">
-              Higher weight applied to mission-critical infrastructure endpoints
+              System criticality contributes to the risk adjustment
             </p>
           </div>
           <div className="p-3 rounded-lg border border-[#DADCD8] bg-white text-center">
@@ -94,7 +94,7 @@ export function DecisionEngineDiagram() {
               Confidence Modulation
             </p>
             <p className="text-[11px] text-[#65686D] font-sans mt-0.5">
-              Score elevated when predictions show high entropy or ambiguous margins
+              Model uncertainty contributes to the risk adjustment
             </p>
           </div>
         </div>
@@ -110,7 +110,7 @@ export function DecisionEngineDiagram() {
             Policy Override &amp; Multi-Threshold Classification
           </p>
           <p className="text-[11px] text-[#65686D] font-sans mt-0.5">
-            Hard policy rules (e.g., zero-tolerance signatures) force BLOCK immediately; otherwise thresholds evaluate fused score
+            Policy rules and empirically chosen thresholds determine the response
           </p>
         </div>
 
@@ -126,12 +126,12 @@ export function DecisionEngineDiagram() {
           <div className="p-3 rounded-lg border border-amber-300 bg-amber-50 space-y-1">
             <span className="font-bold text-sm text-amber-800 block">MONITOR</span>
             <span className="text-[10px] font-mono text-amber-800 font-semibold block">0.3 ≤ Score &lt; 0.6</span>
-            <p className="text-[11px] text-[#65686D] font-sans">Moderate risk or high uncertainty; flagged for enhanced telemetry</p>
+            <p className="text-[11px] text-[#65686D] font-sans">Moderate risk or uncertainty; marked for monitoring</p>
           </div>
           <div className="p-3 rounded-lg border border-red-300 bg-red-50 space-y-1">
             <span className="font-bold text-sm text-red-700 block">BLOCK</span>
             <span className="text-[10px] font-mono text-red-700 font-semibold block">Score ≥ θ₁ (0.6)</span>
-            <p className="text-[11px] text-[#65686D] font-sans">High-risk intrusion or policy violation; session dropped and logged</p>
+            <p className="text-[11px] text-[#65686D] font-sans">High-risk or policy-triggered response; decision logged</p>
           </div>
         </div>
       </div>

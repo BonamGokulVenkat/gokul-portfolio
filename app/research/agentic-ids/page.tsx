@@ -70,7 +70,7 @@ export default function AgenticIdsResearchPage() {
           { label: "TYPE", value: "Final-Year Research" },
           { label: "DOMAIN", value: "Deep Learning · Cybersecurity" },
           { label: "DATASET", value: "UNSW-NB15" },
-          { label: "STATUS", value: "Presented at SCI-2026 · Publication forthcoming" },
+          { label: "STATUS", value: "Presented at SCI-2026 · Accepted for publication" },
         ]}
         backHref="/#work"
         backLabel="Back to selected work"
@@ -196,15 +196,15 @@ export default function AgenticIdsResearchPage() {
                   <ul className="space-y-1.5 text-[#65686D]">
                     <li className="flex items-start gap-2">
                       <span className="text-[#3157D5] font-bold">·</span>
-                      <span>Raw training and testing splits were combined and randomly shuffled to eliminate temporal ordering artifacts.</span>
+                      <span>Raw training and testing splits were combined and randomly shuffled to reduce ordering bias.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-[#3157D5] font-bold">·</span>
-                      <span>Data was partitioned into 80% training and 20% test sets using strict label stratification.</span>
+                      <span>Data was partitioned into 80% training and 20% test sets using a stratified split.</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-[#3157D5] font-bold">·</span>
-                      <span>A deterministic subset of the training partition was isolated as an internal validation holdout.</span>
+                      <span>A subset of the training partition was used for internal validation.</span>
                     </li>
                   </ul>
                 </div>
@@ -224,7 +224,7 @@ export default function AgenticIdsResearchPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-[#3157D5] font-bold">·</span>
-                      <span>Sparse, severe attack classes (Analysis, Backdoor, Shellcode, Worms) were grouped into an aggregated <code className="font-mono text-xs">OTHER</code> category to mitigate severe class imbalance.</span>
+                      <span>Rare attack classes (Analysis, Backdoor, Shellcode, Worms) were grouped into an aggregated <code className="font-mono text-xs">OTHER</code> category to address class imbalance.</span>
                     </li>
                   </ul>
                 </div>
@@ -262,7 +262,7 @@ export default function AgenticIdsResearchPage() {
                 Raw UNSW-NB15 flow data includes 42 descriptive features spanning connection metrics, packet lengths, inter-arrival times, and protocol-related attributes. Mutual-information (MI) ranking was used to reduce the input feature set while retaining features with stronger relationships to the prediction targets.
               </p>
               <p className="text-sm sm:text-base text-[#65686D]">
-                Mutual information measures dependence between individual features and the target label without assuming a purely linear relationship. The experimental pipeline retained the top 25 ranked features, reducing the model input from 42 features to 25.
+                Mutual information reduced the input from 42 features to the top 25 ranked features.
               </p>
             </div>
 
@@ -295,17 +295,17 @@ export default function AgenticIdsResearchPage() {
                 id="multitask-heading"
                 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#16181B]"
               >
-                One representation, two prediction tasks
+                Two prediction tasks from network-flow features
               </h2>
               <p className="text-base text-[#65686D] leading-relaxed">
-                The framework uses a shared representation that branches into two related prediction heads:
+                The evaluated models produce two related predictions:
               </p>
             </div>
 
             <div className="p-6 rounded-xl border border-[#DADCD8] bg-white space-y-6">
               <div className="p-4 rounded-lg border border-[#DADCD8] bg-[#F7F7F3] font-mono text-xs text-center space-y-2">
-                <span className="text-[#3157D5] font-semibold block">SHARED LATENT REPRESENTATION</span>
-                <p className="text-[#16181B] font-bold text-sm">Common Dense Feature Space</p>
+                <span className="text-[#3157D5] font-semibold block">DUAL PREDICTION</span>
+                <p className="text-[#16181B] font-bold text-sm">Binary and Multiclass Outputs</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <div className="p-3 rounded bg-white border border-[#DADCD8]">
                     <span className="text-[#18835B] font-bold block">Head A: Binary</span>
@@ -324,10 +324,10 @@ export default function AgenticIdsResearchPage() {
 
               <div className="space-y-3 text-xs sm:text-sm text-[#65686D] leading-relaxed">
                 <p>
-                  <strong className="text-[#16181B]">Architectural Rationale:</strong> Binary intrusion detection and attack-type classification are related tasks. A shared representation allows both prediction heads to learn from common network-flow features while producing separate binary and multiclass outputs.
+                  <strong className="text-[#16181B]">Architectural Rationale:</strong> Binary intrusion detection and attack-type classification are related tasks. The evaluated models use network-flow features to produce separate binary and multiclass outputs.
                 </p>
                 <p>
-                  <strong className="text-[#16181B]">Evaluated Model Families:</strong> Four distinct neural network architectures were evaluated on this multi-task objective: Multilayer Perceptron (MLP), 1D Convolutional Neural Network (CNN), Gated Recurrent Unit (GRU), and Long Short-Term Memory (LSTM). Internal layer counts, kernel configurations, and hidden units varied appropriately across the four families.
+                  <strong className="text-[#16181B]">Evaluated Model Families:</strong> Four neural network architectures were evaluated: Multilayer Perceptron (MLP), Convolutional Neural Network (CNN), Gated Recurrent Unit (GRU), and Long Short-Term Memory (LSTM).
                 </p>
               </div>
             </div>
@@ -749,8 +749,7 @@ export default function AgenticIdsResearchPage() {
                   "Absence of Hardware Integration: Interaction with firewall devices was not demonstrated in this study; response actions were evaluated within the experimental setup.",
                   "Throughput and Latency Constraints: The study evaluated offline classification efficacy. Low-latency operational requirements were not benchmarked.",
                   "Empirical Decision Thresholds: Parameters for risk fusion (β, γ) and action thresholds (α, θ₁, θ₂) were empirically chosen for this benchmark and would require environment-specific calibration.",
-                  "Concept Drift & Novel Attacks: The models assume a stationary statistical distribution between train and test partitions. Adapting to concept drift and novel attack modes remains unaddressed.",
-                  "Availability vs. Security Trade-offs: Automated blocking can inadvertently create self-inflicted denial-of-service conditions if false-positive rates spike against critical business workflows.",
+                  "Concept Drift & Novel Attacks: Adaptation to concept drift and novel attacks remains future work.",
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3">
                     <span className="text-[#3157D5] font-mono font-bold shrink-0">
@@ -927,7 +926,6 @@ export default function AgenticIdsResearchPage() {
                 <div className="space-y-1">
                   <span className="text-[10px] text-[#65686D] uppercase">CONFERENCE</span>
                   <p className="font-bold text-[#16181B]">SCI-2026</p>
-                  <p className="text-[11px] text-[#65686D] font-sans">Smart Computing &amp; Informatics</p>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[10px] text-[#65686D] uppercase">VENUE &amp; DATES</span>
@@ -936,8 +934,8 @@ export default function AgenticIdsResearchPage() {
                 </div>
                 <div className="space-y-1">
                   <span className="text-[10px] text-[#65686D] uppercase">STATUS</span>
-                  <p className="font-bold text-[#18835B]">Publication forthcoming</p>
-                  <p className="text-[11px] text-[#65686D] font-sans">Presented at conference</p>
+                  <p className="font-bold text-[#18835B]">Accepted for publication</p>
+                  <p className="text-[11px] text-[#65686D] font-sans">Presented at SCI-2026</p>
                 </div>
               </div>
 
