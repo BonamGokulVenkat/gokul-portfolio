@@ -25,6 +25,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  verification: {
+    google: "FFDU7NLmOIGX8TVIH-aS_1rdDVw8qddQYm9YcdhS2eQ",
+  },
   title: {
     default: "Bonam Gokul Venkat | Backend Software Engineer",
     template: "%s | Bonam Gokul Venkat",
